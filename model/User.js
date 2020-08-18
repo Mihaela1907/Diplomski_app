@@ -42,7 +42,11 @@ const UserSchema = new Schema({
     sex: {
         type: String,
         required: true
-    }
+    },
+    donationDate: [{
+        type: Date,
+        required: false
+    }]
 });
 
 module.exports = User = mongoose.model('users', UserSchema);

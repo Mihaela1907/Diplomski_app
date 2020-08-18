@@ -16,6 +16,21 @@ const getters = {
 };
 
 const actions = {
+    // Add donation
+    async addDonation({
+        commit
+    }, userData) {
+        try {
+            commit('donation_request');
+            let res = await axios.post(`http://localhost:5000/api/users/profile/${userData._id}/donationDate`, userData);
+            if (res.data.success !== undefined) {
+                commit('donation_success');
+            }
+            return res;
+        } catch (err) {
+            commit('donation_error', err)
+        }
+    },
     // Login Action
     async login({
         commit
@@ -136,6 +151,17 @@ const mutations = {
     update_error(state, err) {
         state.error = err.response.data.msg
     },
+    donation_request(state) {
+        state.error = null
+        state.status = 'loading'
+    },
+    donation_success(state) {
+        state.error = null
+        state.status = 'success'
+    },
+    donation_error(state, err) {
+        state.error = err.response.data.msg
+    }
 };
 
 export default {

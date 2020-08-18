@@ -7,6 +7,29 @@ const key = require('../../config/keys').secret;
 const User = require('../../model/User');
 
 /**
+ * @route POST api/users/profile/donationDate
+ * @desc Add donation
+ * @access Private
+ */
+
+router.post('/profile/:_id/donationDate', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    User.findById(req.params._id).then(function(user){
+        if(!user){return res.sendStatus(401);}
+        if(typeof req.body.donationDate !== 'undefined'){
+            user.donationDate = req.body.donationDate;
+        }
+        return user.save().then(function(){
+            return res.json({
+                user: user, 
+                success: true
+            });
+        });
+    }).catch(next);
+});
+
+/**
  * @route POST api/users/register
  * @desc Register the User
  * @access Public
@@ -22,7 +45,8 @@ router.post('/register', (req, res) => {
         residence,
         bloodgroup,
         phonenumber,
-        sex
+        sex,
+        donationDate
     } = req.body
     if (password !== confirm_password) {
         return res.status(400).json({
@@ -59,7 +83,8 @@ router.post('/register', (req, res) => {
         residence,
         bloodgroup,
         phonenumber,
-        sex
+        sex,
+        donationDate
     });
     // Hash the password
     bcrypt.genSalt(10, (err, salt) => {
@@ -104,7 +129,8 @@ router.post('/login', (req, res) => {
                     residence: user.residence,
                     bloodgroup: user.bloodgroup,
                     phonenumber: user.phonenumber,
-                    sex: user.sex
+                    sex: user.sex,
+                    donationDate: user.donationDate
                 }
                 jwt.sign(payload, key, {
                     expiresIn: 604800
@@ -135,7 +161,8 @@ router.get('/profile', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
     return res.json({
-        user: req.user
+        user: req.user,
+        success: true
     });
 });
 /**
@@ -148,9 +175,6 @@ router.put('/profile/:_id', passport.authenticate('jwt', {
 }), (req, res, next) => {
     User.findById(req.params._id).then(function(user){
         if(!user){return res.sendStatus(401);}
-        if(typeof req.body.email !== 'undefined'){
-            user.email = req.body.email;
-        }
         if(typeof req.body.username !== 'undefined'){
             user.username = req.body.username;
         }
@@ -173,7 +197,10 @@ router.put('/profile/:_id', passport.authenticate('jwt', {
             user.sex = req.body.sex;
         }
         return user.save().then(function(){
-            return res.json({user: user});
+            return res.json({
+                user: user, 
+                success: true
+            });
         });
     }).catch(next);
 });

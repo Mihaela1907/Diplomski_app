@@ -53,6 +53,17 @@
             >
             </div>
             <div class="form-group">
+            <label for="birthdate">Donation date</label>
+            <input
+                id="donationDate"
+                type="date"
+                placeholder="donationDate date"
+                name="donationDate"
+                v-model="donationDate"
+                class="form-control"
+            >
+            </div>
+            <div class="form-group">
               <label for="sex">Sex</label>
               <br>
               <input type="radio" id="male" value="Male" v-model="sex">
@@ -64,12 +75,12 @@
             <label for="residence">Residence</label>
             <input
                 type="text"
-                class="form-control"
                 placeholder="Residence"
-                name="residence"
-                id="residence"
                 v-model="residence"
-            >
+                name="residence"
+                id="autocomplete"
+                class="form-control"
+            />
             </div>
             <div class="form-group">
             <label for="bloodgroup">Blood group</label>
@@ -136,6 +147,7 @@
 </template>
 
 <script>
+const google = window.google;
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -149,7 +161,8 @@ export default {
       residence: "",
       bloodgroup: "",
       phonenumber: "",
-      sex: []
+      sex: [],
+      donationDate: ""
     };
   },
   methods: {
@@ -165,7 +178,8 @@ export default {
         residence: this.residence,
         bloodgroup: this.bloodgroup,
         phonenumber: this.phonenumber,
-        sex: this.sex
+        sex: this.sex,
+        donationDate: this.donationDate
       };
       this.register(user).then(res => {
         if (res.data.success) {
@@ -173,6 +187,11 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    new google.maps.places.Autocomplete(
+      document.getElementById("autocomplete")
+    );
   }
 };
 </script>
