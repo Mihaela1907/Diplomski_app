@@ -4,7 +4,7 @@
     <div class="card" v-if="user">
       <ul class="list-group">
         <li class="list-group-item">Name: {{ user.name }}</li>
-        <li class="list-group-item">Birthdate: {{ user.birthdate }}</li>
+        <li class="list-group-item">Birthdate: {{ moment(user.birthdate).format('DD.MM.YYYY.')}}</li>
         <li class="list-group-item">Residence: {{ user.residence }}</li>
         <li class="list-group-item">Blood group: {{ user.bloodgroup }}</li>
         <li class="list-group-item">Phone number: {{ user.phonenumber}}</li>

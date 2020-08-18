@@ -3,20 +3,18 @@
     <h2>Donations</h2>
     <div class="card" v-if="user">
       <ul class="list-group">
-        <input v-model="proba"
-        type="date">
-        <button class="btn btn-primary" v-on:click="addToDb()">Add date test</button>
         <form @submit.prevent="addDonations">
           <div class="form-group">
-            <li class="list-group-item" v-for="item in items" :key="item.id">Date: {{ item }}</li>
-              <input
-                id="donationDate"
-                type="date"
-                placeholder="Update date"
-                name="donationDate"
-                v-model="donationDate"
-                class="form-control"
-              >
+            <div class="dateList">
+              <li class="list-group-item" v-for="item in dates" :key="item.id">Date: {{ moment(item).format('DD.MM.YYYY.') }}</li>
+            </div>
+            <input
+              id="donationDate"
+              type="date"
+              name="donationDate"
+              v-model="donationDate"
+              class="form-control"
+            >
           </div>
           <button class="btn btn-primary">Add date</button>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -32,8 +30,7 @@ export default {
   data() {
     return {
       donationDate: "",
-      proba: "",
-      items: []
+      dates: []
     }
   },
   computed: mapGetters(["user"]),
@@ -41,27 +38,30 @@ export default {
     ...mapActions(["addDonation"]),
         ...mapActions(["getProfile"]),
     addDonations() {
-      console.log(this.user._id)
+      //console.log(this.user._id)
+      this.dates.push(this.donationDate);
       let user = {
         _id: this.user._id,
-        donationDate: this.donationDate,
+        dates: this.dates,
       };
       this.addDonation(user).then(res => {
         if (res.data.success) {
           this.$router.go();
         }
       });
-    },
-    addToDb(){
-      this.items.push(this.proba);
-      console.log(this.items);
     }
   },
   created() {
     this.getProfile().then(res => {
         if (res.data.success) {
-          this.items = this.user.donationDate;
-          console.log(this.items);
+          this.dates = this.user.donationDate;
+
+          var date_sort_desc = function (date1, date2) {
+            if (date1 > date2) return -1;
+            if (date1 < date2) return 1;
+            return 0;
+          };
+          this.dates.sort(date_sort_desc);
         }
       }
     );
@@ -70,4 +70,8 @@ export default {
 </script>
 
 <style>
+.dateList {
+  height: 200px;
+  overflow-y: auto;
+}
 </style>

@@ -17,9 +17,7 @@ router.post('/profile/:_id/donationDate', passport.authenticate('jwt', {
 }), (req, res, next) => {
     User.findById(req.params._id).then(function(user){
         if(!user){return res.sendStatus(401);}
-        if(typeof req.body.donationDate !== 'undefined'){
-            user.donationDate = req.body.donationDate;
-        }
+        user.donationDate = req.body.dates;
         return user.save().then(function(){
             return res.json({
                 user: user, 
