@@ -58,8 +58,10 @@ export default {
       };
       this.login(user)
         .then(res => {
-          if (res.data.success) {
+          if (res.data.success && res.data.role == "basic") {
             this.$router.push("/profile");
+          } else if (res.data.success && res.data.role == "admin") {
+            this.$router.push("/admin");
           }
         })
         .catch(err => {

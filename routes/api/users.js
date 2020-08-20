@@ -44,7 +44,8 @@ router.post('/register', (req, res) => {
         bloodgroup,
         phonenumber,
         sex,
-        donationDate
+        donationDate,
+        role
     } = req.body
     if (password !== confirm_password) {
         return res.status(400).json({
@@ -82,7 +83,8 @@ router.post('/register', (req, res) => {
         bloodgroup,
         phonenumber,
         sex,
-        donationDate
+        donationDate,
+        role
     });
     // Hash the password
     bcrypt.genSalt(10, (err, salt) => {
@@ -128,7 +130,8 @@ router.post('/login', (req, res) => {
                     bloodgroup: user.bloodgroup,
                     phonenumber: user.phonenumber,
                     sex: user.sex,
-                    donationDate: user.donationDate
+                    donationDate: user.donationDate,
+                    role: user.role
                 }
                 jwt.sign(payload, key, {
                     expiresIn: 604800
@@ -137,6 +140,7 @@ router.post('/login', (req, res) => {
                         success: true,
                         token: `Bearer ${token}`,
                         user: user,
+                        role: user.role,
                         msg: "Hurry! You are now logged in."
                     });
                 })

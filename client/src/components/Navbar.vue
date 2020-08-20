@@ -29,11 +29,17 @@
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link to="/register" class="nav-link">Register</router-link>
         </li>   
-        <li class="nav-item" v-if="isLoggedIn">
+        <li class="nav-item" v-if="isLoggedIn && !isAdmin">
           <router-link to="/profile" class="nav-link">Profile</router-link>
         </li>
-        <li class="nav-item" v-if="isLoggedIn">
+        <li class="nav-item" v-if="isLoggedIn && !isAdmin">
           <router-link to="/donations" class="nav-link">Donations</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn && isAdmin">
+          <router-link to="/donations" class="nav-link">Donors</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn && isAdmin">
+          <router-link to="/donations" class="nav-link">Find donor</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedIn">
           <a to="/logout" class="nav-link" @click.prevent="logoutUser">Logout</a>
@@ -47,9 +53,17 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["user"]),
+    isAdmin () {
+      return this.user && this.user.role === "admin";
+    }
+  },
+  created () {
+    this.getProfile();
   },
   methods: {
+    ...mapActions(["getProfile"]),
     ...mapActions(["logout"]),
     logoutUser() {
       this.logout();

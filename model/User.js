@@ -46,7 +46,13 @@ const UserSchema = new Schema({
     donationDate: [{
         type: Date,
         required: false
-    }]
+    }],
+    role: {
+     type: String,
+     default: 'basic',
+     required: false,
+     enum: ["basic", "admin"]
+    },
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
