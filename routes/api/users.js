@@ -167,6 +167,20 @@ router.get('/profile', passport.authenticate('jwt', {
         success: true
     });
 });
+
+/**
+ * @route GET api/users
+ * @desc Get all users
+ * @access Private
+ */
+router.get('/' , function (req , res) {
+    User.find({}).then(function (users) {
+        return res.json({
+            users: users, 
+            success: true
+        });
+    });
+   });
 /**
  * @route PUT api/users/profile
  * @desc Update the User's Data

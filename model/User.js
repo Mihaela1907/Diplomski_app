@@ -19,10 +19,6 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     birthdate: {
         type: Date,
         required: true
@@ -45,7 +41,7 @@ const UserSchema = new Schema({
     },
     donationDate: [{
         type: Date,
-        required: false
+        required: true
     }],
     role: {
      type: String,

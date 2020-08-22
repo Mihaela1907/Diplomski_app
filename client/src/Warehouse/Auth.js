@@ -12,6 +12,7 @@ const getters = {
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user,
+    users: state => state.users,
     error: state => state.error
 };
 
@@ -76,6 +77,15 @@ const actions = {
         commit('user_profile', res.data.user)
         return res;
     },
+    // Get the users
+    async getUsers({
+        commit
+    }) {
+        commit('users_request');
+        let res = await axios.get('http://localhost:5000/api/users/')
+        commit('users_profile', res.data.users)
+        return res;
+    },
     // Update user profile
      async updateProfile({
         commit
@@ -138,6 +148,12 @@ const mutations = {
         state.status = 'loading'
     },
     user_profile(state, user) {
+        state.user = user
+    },
+    users_request(state) {
+        state.status = 'loading'
+    },
+    users_profile(state, user) {
         state.user = user
     },
     update_request(state) {

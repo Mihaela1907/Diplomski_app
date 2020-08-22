@@ -59,9 +59,17 @@ const router = new Router({
       }
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: () => import('../views/Admin.vue'),
+      path: '/donors',
+      name: 'donors',
+      component: () => import('../views/Donors.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/finddonor',
+      name: 'finddonor',
+      component: () => import('../views/FindDonor.vue'),
       meta: {
         requiresAuth: true
       }
