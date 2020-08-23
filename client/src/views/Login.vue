@@ -1,40 +1,37 @@
 <template>
-  <div>
-    <h2>Login</h2>
-    <div class="row">
-      <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
-          <h4>Login</h4>
-        </div>
-        <div class="card-body">
-          <form @submit.prevent="loginUser">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input
-                id="username"
-                type="text"
-                placeholder="Username"
-                name="username"
-                v-model="username"
-                class="form-control"
-              >
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                name="password"
-                id="password"
-                v-model="password"
-              >
-            </div>
-            <input type="submit" class="btn btn-primary" value="Login">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link to="/register" class="card-link">Need an account?</router-link>
-          </form>
-        </div>
+  <div class="login">
+    <div class="loginBanner">
+    </div>
+    <div class="loginBox">
+        <p>PRIJAVA</p>
+      <div class="card-body">
+        <form @submit.prevent="loginUser">
+          <div class="form-group">
+            <label for="username">Korisničko ime</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Unesite korisničko ime"
+              name="username"
+              v-model="username"
+              class="form-control"
+            >
+          </div>
+          <div class="form-group">
+            <label for="password">Lozinka</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Unesite lozinku"
+              name="password"
+              id="password"
+              v-model="password"
+            >
+          </div>
+          <button class="btn btn-primary">Prijava</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <router-link to="/register" class="card-link">Trebate račun?</router-link>
+        </form>
       </div>
     </div>
   </div>
@@ -73,14 +70,45 @@ export default {
 </script>
 
 <style>
-.card {
-  width: 60%;
-  border-radius: 0;
+.form-control:focus { 
+  box-shadow: inset 0 -1px 0 #ddd; 
 }
-.btn {
-  border-radius: 0;
+.login p {
+  font-size: 27px;
+  padding-left: 20px;
+  font-weight: 500;
+  color: rgb(80, 80, 80);
+  margin-bottom: -4px;
+  margin-top: 20px;
 }
-.form-control {
-  border-radius: 0;
+.login {
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 10px 10px 10px 5px #888888;
+}
+.loginBanner {
+  width: 50%;
+  height: 306px;
+  float: left;
+  background-image: url('../assets/login.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.loginBox {
+  width: 50%;
+  float: left;
+  padding-left: 20px;
+  padding-right: 25px;
+}
+.login input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid rgb(173, 173, 173);
+}
+.login label {
+  font-weight: bold;
+  color: rgb(122, 122, 122);
 }
 </style>

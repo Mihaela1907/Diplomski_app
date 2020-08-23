@@ -108,7 +108,7 @@
           <input
               id="phonenumber"
               type="number"
-              placeholder="0991234567"
+              placeholder="Unesite kontakt"
               name="phonenumber"
               v-model="phonenumber"
               class="form-control phoneR"

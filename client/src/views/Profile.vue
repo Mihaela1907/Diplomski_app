@@ -96,7 +96,6 @@ export default {
   background-image: url('../assets/back2.jpg');
   background-size: 100%;
   background-repeat: no-repeat;
-  border-radius: 25px;
 }
 .firstBox {
   width: 250px;

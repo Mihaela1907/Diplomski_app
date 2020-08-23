@@ -31,9 +31,6 @@ export default {
   border-radius: 0px;
 }
 .app {
-  height: 874px;
-  background-image: url('./assets/back.jpg');
-  background-size: 100%;
-  background-repeat: no-repeat;
+  background-color: lightblue;
 }
 </style>

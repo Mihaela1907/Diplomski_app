@@ -74,6 +74,7 @@ export default {
 
 <style>
 .navbar {
-  box-shadow: 0px 10px 10px 3px #888888;
+  box-shadow: 0px 3px 10px 3px #888888;
+  z-index: 1;
 }
 </style>
