@@ -21,7 +21,7 @@
               class="form-control"
             >
           </div>
-          <button class="btn btn-primary" v-on:click="checkDate">Add date</button>
+          <button class="btn btn-primary" v-on:click="checkDate()">Add date</button>
           &nbsp;&nbsp;&nbsp;&nbsp;
         </form>
       </ul>
@@ -43,23 +43,30 @@ export default {
     ...mapActions(["addDonation"]),
         ...mapActions(["getProfile"]),
     checkDate() {
-      const date1 = new Date(this.dates[0]);
+      var now = new Date();
       const date2 = new Date(this.donationDate);
-      var result = (date1.getTime() - date2.getTime()) /(1000*60*60*24);
-      if(result < 0) {result *= -1;}
 
-      if(this.user.sex == "Male") {
-        if(result < 90) {
-          alert("Difference between dates has to be 3 months!");
-        }else {
-          this.addDonations();
-        }
-      } else if (this.user.sex == "Female") {
-        if(result < 120) {
-          alert("Difference between dates has to be 4 months!");
-          console.log(result)
-        }else {
-          this.addDonations();
+      if (date2 > now) {
+        alert("Pokušavate dodati budući datum!");
+      }else {
+        const date1 = new Date(this.dates[0]);
+        var result = (date1.getTime() - date2.getTime()) /(1000*60*60*24);
+
+        if(result < 0) {result *= -1;}
+
+        if(this.user.sex == "Muškarac") {
+          if(result < 90) {
+            alert("Difference between dates has to be 3 months!");
+          }else {
+            this.addDonations();
+          }
+        } else if (this.user.sex == "Žena") {
+          if(result < 120) {
+            alert("Difference between dates has to be 4 months!");
+            console.log(result)
+          }else {
+            this.addDonations();
+          }
         }
       }
     },
@@ -76,11 +83,7 @@ export default {
             return 0;
           };
           this.dates.sort(date_sort_desc);
-        this.addDonation(user).then(res => {
-          if (res.data.success) {
-            this.$router.go();
-          }
-        });
+        this.addDonation(user)
       }else {
         alert("Please choose a date!");
       }

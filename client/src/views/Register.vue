@@ -1,153 +1,154 @@
 <template>
-  <div>
-    <h2>Register</h2>
-    <div class="row">
-      <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
-          <h4>Register</h4>
-        </div>
-        <div class="card-body">
-          <form @submit.prevent="registerUser">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input
-                id="username"
-                type="text"
-                placeholder="Username"
-                name="username"
-                v-model="username"
-                class="form-control"
-              >
-            </div>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Name"
-                name="name"
-                v-model="name"
-                class="form-control"
-              >
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                type="text"
-                placeholder="Email"
-                name="email"
-                v-model="email"
-                class="form-control"
-              >
-            </div>
-            <div class="form-group">
-            <label for="birthdate">Birth date</label>
+  <div class="register">
+    <div class="registerBanner">
+    </div>
+    <div class="registerBox">
+      <p>REGISTRACIJA</p>
+      <div class="card-body registerData">
+        <form @submit.prevent="registerUser">
+          <div class="form-group usernameRegister">
+            <label class="label" for="username">Korisničko ime</label>
             <input
-                id="birthdate"
-                type="date"
-                placeholder="Birth date"
-                name="birthdate"
-                v-model="birthdate"
-                class="form-control"
+              id="username"
+              type="text"
+              placeholder="Unesite korisničko ime"
+              name="username"
+              v-model="username"
+              class="form-control usernameR"
+              maxlength="20"
             >
-            </div>
-            <div class="form-group">
-            <label for="birthdate">Donation date</label>
+          </div>
+          <div class="form-group nameRegister">
+            <label class="label" for="name">Ime i prezime</label>
             <input
-                id="donationDate"
-                type="date"
-                placeholder="donationDate date"
-                name="donationDate"
-                v-model="donationDate"
-                class="form-control"
+              id="name"
+              type="text"
+              placeholder="Unesite ime i prezime"
+              name="name"
+              v-model="name"
+              class="form-control nameR"
+              maxlength="40"
             >
-            </div>
-            <div class="form-group">
-              <label for="sex">Sex</label>
-              <br>
-              <input type="radio" id="male" value="Male" v-model="sex">
-              <label for="Male">Male</label>
-              <input type="radio" id="female" value="Female" v-model="sex">
-              <label for="Female">Female</label>
-            </div>
-            <div class="form-group">
-            <label for="residence">Residence</label>
+          </div>
+          <div class="form-group">
+            <label class="label" for="email">E-mail</label>
+            <input
+              id="email"
+              type="text"
+              placeholder="Unesite e-mail"
+              name="email"
+              v-model="email"
+              class="form-control emailR"
+              maxlength="50"
+            >
+          </div>
+          <div class="form-group">
+            <label class="label" for="residence">Adresa</label>
             <input
                 type="text"
-                placeholder="Residence"
+                placeholder="Unesite adresu"
                 v-model="residence"
                 name="residence"
                 id="autocomplete"
-                class="form-control"
+                class="form-control residenceR"
+                maxlength="50"
             />
-            </div>
-            <div class="form-group">
-            <label for="bloodgroup">Blood group</label>
+          </div>
+          <div class="form-group birthdayRegister">
+            <label class="label" for="birthdate">Datum rođenja</label>
+            <input
+                id="birthdate"
+                type="date"
+                name="birthdate"
+                v-model="birthdate"
+                class="form-control birthdateR"
+            >
+          </div>
+          <div class="form-group donationRegister">
+            <label class="label" for="birthdate">Datum donacije</label>
+            <input
+                id="donationDate"
+                type="date"
+                name="donationDate"
+                v-model="donationDate"
+                class="form-control donationR"
+            >
+          </div>
+          <div class="form-group sexRegister">
+            <label class="label" for="sex">Spol</label>
+            <br>
+            <input type="radio" id="male" value="Muškarac" v-model="sex">
+            <label class="radio" for="Male">Muškarac</label>
+            <input type="radio" id="female" value="Žena" v-model="sex">
+            <label class="radio" for="Female">Žena</label>
+          </div>
+          <div class="form-group bgroupRegister">
+            <label class="label" for="bloodgroup">Krvna grupa</label>
             <br>
             <input type="radio" id="A+" value="A+" v-model="bloodgroup">
-            <label for="A+">A+</label>
+            <label class="radio" for="A+">A+</label>
             <input type="radio" id="B+" value="B+" v-model="bloodgroup">
-            <label for="B+">B+</label>
+            <label class="radio" for="B+">B+</label>
             <input type="radio" id="AB+" value="AB+" v-model="bloodgroup">
-            <label for="AB+">AB+</label>
+            <label class="radio" for="AB+">AB+</label>
             <input type="radio" id="0+" value="0+" v-model="bloodgroup">
-            <label for="0+">0+</label>
+            <label class="radio" for="0+">0+</label>
             <br>
             <input type="radio" id="A-" value="A-" v-model="bloodgroup">
-            <label for="A-">A-</label>
+            <label class="radio" for="A-">A-</label>
             <input type="radio" id="B-" value="B-" v-model="bloodgroup">
-            <label for="B-">B-</label>
+            <label class="radio" for="B-">B-</label>
             <input type="radio" id="AB-" value="AB-" v-model="bloodgroup">
-            <label for="AB-">AB-</label>
+            <label class="radio" for="AB-">AB-</label>
             <input type="radio" id="0-" value="0-" v-model="bloodgroup">
-            <label for="0-">0-</label>
-            </div>
-            <div class="form-group">
-            <label for="phonenumber">Phone number</label>
+            <label class="radio" for="0-">0-</label>
+          </div>
+          <div class="form-group">
+          <label class="label" for="phonenumber">Kontakt</label>
+          <input
+              id="phonenumber"
+              type="number"
+              placeholder="0991234567"
+              name="phonenumber"
+              v-model="phonenumber"
+              class="form-control phoneR"
+              maxlength="10"
+          >
+          </div>
+          <div class="form-group passRegister">
+            <label class="label" for="password">Lozinka</label>
             <input
-                id="phonenumber"
-                type="number"
-                placeholder="0991234567"
-                name="phonenumber"
-                v-model="phonenumber"
-                class="form-control"
+              type="password"
+              class="form-control passR"
+              placeholder="Unesite lozinku"
+              name="password"
+              id="password"
+              v-model="password"
+              maxlength="20"
             >
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Password"
-                name="password"
-                id="password"
-                v-model="password"
-              >
-            </div>
-            <div class="form-group">
-              <label for="confirm_password">Confirm Password</label>
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Confirm Password"
-                name="confirm_password"
-                id="confirm_password"
-                v-model="confirm_password"
-              >
-            </div>
-            <button class="btn btn-primary">Register</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <router-link to="/login" class="card-link">Already have an account?</router-link>
-          </form>
-        </div>
+          </div>
+          <div class="form-group confirmRegister">
+            <label class="label" for="confirm_password">Potvrdite lozinku</label>
+            <input
+              type="password"
+              class="form-control confirmR"
+              placeholder="Unesite lozinku"
+              name="confirm_password"
+              id="confirm_password"
+              v-model="confirm_password"
+              maxlength="20"
+            >
+          </div>
+          <button class="btn btn-primary">Registracija</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <router-link to="/login" class="card-link">Već imate račun?</router-link>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-const google = window.google;
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -168,48 +169,95 @@ export default {
   methods: {
     ...mapActions(["register"]),
     registerUser() {
-      let user = {
-        username: this.username,
-        password: this.password,
-        confirm_password: this.confirm_password,
-        email: this.email,
-        name: this.name,
-        birthdate: this.birthdate,
-        residence: this.residence,
-        bloodgroup: this.bloodgroup,
-        phonenumber: this.phonenumber,
-        sex: this.sex,
-        donationDate: this.donationDate
-      };
-      this.register(user).then(res => {
-        if (res.data.success) {
-          this.$router.push("login");
-        }
-      });
+      var now = new Date();
+      const date2 = new Date(this.donationDate)
+      const date3 = new Date(this.birthdate)
+
+      if (date2 > now) {
+        alert("Pokušavate dodati budući datum donacije!");
+      }else if (date3 > now){
+        alert("Dodajte ispravan datum rođenja!")
+      }else {
+        let user = {
+          username: this.username,
+          password: this.password,
+          confirm_password: this.confirm_password,
+          email: this.email,
+          name: this.name,
+          birthdate: this.birthdate,
+          residence: this.residence,
+          bloodgroup: this.bloodgroup,
+          phonenumber: this.phonenumber,
+          sex: this.sex,
+          donationDate: this.donationDate
+        };
+        this.register(user).then(res => {
+          if (res.data.success) {
+            this.$router.push("login");
+          }
+        });
+      }
     }
-  },
-  mounted() {
-    new google.maps.places.Autocomplete(
-      document.getElementById("autocomplete")
-    );
   }
 };
 </script>
 
 <style>
-.card {
-  width: 60%;
-  border-radius: 0;
+.form-control:focus { 
+  box-shadow: inset 0 -1px 0 #ddd; 
 }
-.btn {
-  border-radius: 0;
+.register {
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 10px 10px 10px 5px #888888;
 }
-.form-control {
-  border-radius: 0;
+.register p {
+  font-size: 27px;
+  padding-left: 20px;
+  font-weight: 500;
+  color: rgb(80, 80, 80);
+  margin-bottom: -4px;
+  margin-top: 20px;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.register input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid rgb(173, 173, 173);
+}
+.label {
+  font-weight: bold;
+  color: rgb(122, 122, 122);
+}
+.registerBanner {
+  width: 50%;
+  height: 762px;
+  float: left;
+  background-image: url('../assets/register.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.registerBox {
+  background-color: white;
+  padding-left: 20px;
+}
+.registerBox, .registerDate {
+  overflow: hidden;
+}
+.usernameRegister, .nameRegister, .passRegister, .confirmRegister, 
+.sexRegister, .bgroupRegister, .birthdayRegister, .donationRegister {
+  width: 50%;
+  float: left;
+}
+.usernameR, .nameR, .birthdateR, .donationR, .passR, .confirmR {
+  width: 90%;
+}
+.phoneR, .residenceR, .emailR {
+  width: 95%;
+}
+.radio {
+  padding-left: 5px;
+  padding-right: 10px;
+  color: grey;
 }
 </style>

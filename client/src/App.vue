@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <Navbar/>
     <br>
     <br>
@@ -29,5 +29,11 @@ export default {
 }
 .btn {
   border-radius: 0px;
+}
+.app {
+  height: 874px;
+  background-image: url('./assets/back.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 </style>

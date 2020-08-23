@@ -2,8 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios';
+import axios from 'axios'
 import moment from 'moment'
+
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyDn7v1ANgekKoinH7hEMT1Jt4fCLyp9Isc",
+    libraries: "places"
+  }
+});
 
 Vue.prototype.moment = moment
 
