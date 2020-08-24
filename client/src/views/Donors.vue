@@ -1,14 +1,101 @@
 <template>
   <div class="donors">
     <h1 class="display3"></h1>
+
       <div class="bloodSuply">
-        <div class="requestedBlood">
-
-        </div>
         <div class="bloodInStock">
+          <div>
+            <label style="font-size:21px;font-weight:500;color:#33819c;margin-top:-10px">Zalihe krvi</label>
+            <label id="todayDate" class="todayDate"
+            style="font-weight:500;color:#33819c">Datum</label>
+          </div>
+          <div class="bloodSuplyNum">
+            <p style="font-size:14px;font-weight:500;color:#33819c;width:65px;">Ukupno</p>
+            <label style="font-size:50px;font-weight:600;color:#33819c">{{ this.bloodInStockNum }}</label>
+          </div>
+          <div class="bloodSuplyGroup">
+            <div class="bloodGroupCount">
+              <label class="bloodName">0+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">A+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">B+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">AB+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">0-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">A-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">B-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">AB-</label>
+              <label>1</label>
+            </div>
+          </div>
+        </div>
 
+        <div class="requestedBlood">
+          <div>
+            <label style="font-size:21px;font-weight:500;color:#b34646;margin-top:-10px">Zahtjevi krvi</label>
+            <label id="todayDate2" class="todayDate"
+            style="font-weight:500;color:#b34646">Datum</label>
+          </div>
+          <div class="bloodSuplyNum">
+            <p style="font-size:14px;font-weight:500;color:#b34646;width:65px;">Ukupno</p>
+            <label style="font-size:50px;font-weight:600;color:#b34646">{{ this.bloodInStockNum }}</label>
+          </div>
+          <div class="requestedBloodGroup">
+            <div class="bloodGroupCount">
+              <label class="bloodName">0+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">A+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">B+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">AB+</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">0-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">A-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">B-</label>
+              <label>1</label>
+            </div>
+            <div class="bloodGroupCount">
+              <label class="bloodName">AB-</label>
+              <label>1</label>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="donorsAll">
         <div class="donorsItem" v-for="item in donors" :key="item.id">
           <li class="userInfo nameDonors" id="noDonors">{{ item.name.toUpperCase() }}
@@ -29,25 +116,27 @@
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
       </div>
-      <div class="mapBox">
+<!--       <div class="mapBox">
         <google-map />
-      </div>
+      </div> -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import GoogleMap from "@/components/GoogleMap";
+ import moment from 'moment';
+//import GoogleMap from "@/components/GoogleMap";
 export default {
-  components: {
+/*   components: {
     GoogleMap
-  },
+  }, */
   data() {
     return {
       donors: [],
       canDonate: [],
       cantDonate: [],
-      tempCan: []
+      tempCan: [],
+      bloodInStockNum: 0
     }
   },
   computed: mapGetters(["users"]),
@@ -60,7 +149,10 @@ export default {
           this.donors = res.data.users;
           this.donors.shift();
 
-          console.log(this.donors.length)
+          for(var k=0; k<this.donors.length;k++){
+            this.bloodInStockNum = this.bloodInStockNum + this.donors[k].donationDate.length
+          }
+
           for(var i=0; i<this.donors.length;i++){
             const donation1 = new Date(this.donors[i].donationDate[0])
             var donationMili = donation1.getTime();
@@ -74,14 +166,17 @@ export default {
             var nextDonate = new Date(donationMili)
             var now = new Date()
 
+            document.getElementById('todayDate').innerHTML = moment(now).format('DD.MM.YYYY.').toString();
+            document.getElementById('todayDate2').innerHTML = moment(now).format('DD.MM.YYYY.').toString();
+
             if(nextDonate < now) {
               this.tempCan.push(i)
             }
           }
 
-            for(var j=0;j<this.tempCan.length;j++){
-              this.canDonate[j] = this.donors[this.tempCan[j]]            
-            }
+          for(var j=0;j<this.tempCan.length;j++){
+            this.canDonate[j] = this.donors[this.tempCan[j]]            
+          }
       }
     });
   },
@@ -91,17 +186,80 @@ export default {
 <style>
 .donors {
   width: 100%;
-  overflow: hidden; 
-  box-shadow: 5px 5px 10px 1px #888888;
-  border-radius: 25px;
+  overflow: hidden;
+  margin-top: 15px;
 }
 .bloodSuply {
   height: 150px;
-  border: 1px solid black;
   margin: 20px 10px 10px 10px;
 }
+.requestedBlood {
+  height: 150px;
+  width: 47%;
+  background-color: rgb(230, 154, 154);
+  overflow: hidden;
+  float: right;
+  padding: 15px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+.bloodInStock {
+  height: 150px;
+  width: 47%;
+  float: left;
+  background-color: rgb(128, 203, 228);
+  padding: 15px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+.bloodSuplyNum {
+  width: 15%;
+  float: left;
+  padding-left: 10px;
+}
+.bloodSuplyGroup, .requestedBloodGroup {
+  width: 85%;
+  overflow: hidden;
+  padding-left: 20px;
+}
+.requestedBloodGroup .bloodName {
+  background-color: #b34646;
+  color: rgb(223, 236, 240) !important;
+}
+.requestedBloodGroup .bloodGroupCount label {
+  color: #b34646;
+}
+.bloodGroupCount {
+  width: 11%;
+  height: 85px;
+  float: left;
+  margin-right: 5px;
+  background-color: white;
+  border-radius: 10px;
+}
+.bloodName {
+  background-color: #33819c;
+  border-radius: 10px;
+  color: rgb(223, 236, 240) !important;
+}
+.bloodGroupCount label {
+  width: 54px;
+  height: 35px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #33819c;
+}
+.bloodSuplyNum p {
+  margin-top: 15px;
+  margin-bottom: -15px;
+}
+.todayDate {
+  float: right;
+}
 .canDonors, .donorsAll {
-  width: 33%;
+  width: 25%;
   float: left;
   height: 550px;
   overflow-y: auto;

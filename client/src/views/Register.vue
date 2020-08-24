@@ -207,9 +207,13 @@ export default {
   box-shadow: inset 0 -1px 0 #ddd; 
 }
 .register {
-  width: 100%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 82%;
   overflow: hidden;
   box-shadow: 10px 10px 10px 5px #888888;
+  margin-bottom: 50px;
 }
 .register p {
   font-size: 27px;

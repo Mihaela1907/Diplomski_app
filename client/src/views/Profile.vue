@@ -4,11 +4,11 @@
       <ul class="list-group">
         <img src="@/assets/user-image.jpg" alt="User picture" width="230" height="230">
         <br>
-        <router-link to="/userinfo" class="btn btn-primary">Uredi profil</router-link>
-        <li class="list-group-item" id="notifyDonation" ref="notifyDonation"></li>
-        <li class="list-group-item">Možete donirati od: {{ moment(this.nextDonation).format('DD.MM.YYYY.') }}</li>
+        <router-link to="/userinfo" class="btn btn-primary info">Uredi profil</router-link>
+        <li class="list-group-item info" id="notifyDonation" ref="notifyDonation"></li>
+        <li class="list-group-item info">Možete donirati od: {{ moment(this.nextDonation).format('DD.MM.YYYY.') }}</li>
         <br>
-        <li class="list-group-item" 
+        <li class="list-group-item info" 
         style="margin-bottom:-1px;
         background-color:#B7CAFF;">Prošle donacije:</li>
         <div class="donationList">
@@ -31,13 +31,13 @@
       <li class="list-group-item email">{{ user.email}}</li>
       <li class="list-group-item address">{{ user.residence }}</li>
       <br>
-      <li class="list-group-item">Datum rođenja: {{ moment(user.birthdate).format('DD.MM.YYYY.')}}</li>
-      <li class="list-group-item">Spol: {{ user.sex }}</li>
+      <li class="list-group-item info infoUser">Datum rođenja: {{ moment(user.birthdate).format('DD.MM.YYYY.')}}</li>
+      <li class="list-group-item info infoUser">Spol: {{ user.sex }}</li>
     </div>
 
     <div class="fourthBox">
       <br>
-      <li class="list-group-item">Donirali ste krv {{this.donations.length}} puta. </li>
+      <li class="list-group-item info">Donirali ste krv {{this.donations.length}} puta. </li>
       <div v-for="units in donations" :key="units.id">
         <img class="bloodBags" src="@/assets/blood-times.jpg" alt="Blodd units" width="80" height="80">
       </div>
@@ -91,8 +91,6 @@ export default {
 .profile {
   width: 100%;
   overflow: hidden;
-  box-shadow: 10px 10px 10px 5px #888888;
-  margin-bottom: 50px;
   background-image: url('../assets/back2.jpg');
   background-size: 100%;
   background-repeat: no-repeat;
@@ -164,5 +162,11 @@ export default {
 }
 .bloodBags {
   float: left;
+}
+.info {
+  font-weight: 500;
+}
+.infoUser {
+  color: #6e6e6e;
 }
 </style>

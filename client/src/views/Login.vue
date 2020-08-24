@@ -82,10 +82,14 @@ export default {
   margin-top: 20px;
 }
 .login {
-  width: 100%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 80%;
   overflow: hidden;
   background-color: white;
   box-shadow: 10px 10px 10px 5px #888888;
+
 }
 .loginBanner {
   width: 50%;

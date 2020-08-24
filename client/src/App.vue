@@ -1,14 +1,14 @@
 <template>
   <div id="app" class="app">
     <Navbar/>
-    <br>
-    <br>
-    <div class="container">
+    <div class="">
       <Errors v-if="error" :msg="error"/>
       <router-view/>
     </div>
+    <footer></footer>
   </div>
 </template>
+
 <script>
 import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
@@ -32,5 +32,12 @@ export default {
 }
 .app {
   background-color: lightblue;
+}
+footer {
+  background-color: #343A40;
+  height: 300px;
+  box-shadow: 10px 3px 10px 10px #464646;
+  z-index: 1000;
+  position:relative;
 }
 </style>

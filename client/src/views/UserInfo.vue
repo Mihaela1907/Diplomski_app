@@ -1,6 +1,5 @@
 <template>
   <div class="editInfo">
-    <h2>Uredi korisničke podatke</h2>
     <div class="" v-if="user">
       <div class="form-group Card">
         <div class="Item">Ime i prezime:</div>
@@ -171,8 +170,10 @@ export default {
 
 <style>
 .Card {
-  width: 100%;
-  /* border: 1px solid black; */
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 90%;
   overflow: hidden; 
   box-shadow: 5px 5px 10px 1px #888888;
 }
