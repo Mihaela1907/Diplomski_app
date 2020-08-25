@@ -44,7 +44,7 @@
     <div class="potentialDonors">
       <p id="notifi">Unesite podatke u tražilicu.</p>
       <div class="donorsItem" v-for="items in list" :key="items.id">
-        <li class="userInfo nameDonors" id="noDonors">{{ items.username.toUpperCase() }}</li>
+        <li class="userInfo nameDonors" id="noDonors">{{ items.name.toUpperCase() }}</li>
         <li class="userInfo donationDonors">Posljednja donacija: {{ moment(items.donationDate[0]).format('DD.MM.YYYY.') }}</li>
         <li class="userInfo bgroupDonors">{{ items.bloodgroup }}</li>
         <li class="userInfo residenceDonors">{{ items.residence }}</li>
@@ -167,8 +167,12 @@ export default {
   overflow-y: auto;
 }
 .donorsItem {
+  width: 45%;
+  height: 140px;
+  float: left;
   background-color: white;
   margin: 0px 20px 20px 20px;
+  border-radius: 10px;
 }
 .userInfo {
   list-style-type: none;
@@ -186,7 +190,7 @@ export default {
   background-image: linear-gradient(to right, #548c54 , #99e099);
 }
 .nameDonorsAll {
-  background-image: linear-gradient(to right, #5c73c0 , #99b2e0);
+  background-image: linear-gradient(to right, #33819c , rgb(128, 203, 228));
 }
 .bgroupDonors, .residenceDonors, .phoneDonors {
   background-size: contain;

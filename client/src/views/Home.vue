@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="homeBanner"></div>
+    <!-- <div class="homeBanner"></div> -->
 <!-- <div class="measure one">
       <div class="name">A+</div>
       <div class="top"></div>
@@ -11,6 +11,7 @@
       </div>
       <div class="bottom"></div>
     </div> -->
+    <VueMaps></VueMaps>
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12 homeBox">
         <div class="card bg-dark text-white">
@@ -63,9 +64,12 @@
 </template>
 
 <script>
+import VueMaps from "@/components/VueMaps";
 export default {
-  name: "home",
-  components: {}
+  components: {
+    VueMaps
+  },
+  name: "home"
 };
 </script>
 

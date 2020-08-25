@@ -121,20 +121,13 @@
         </div>
         <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
       </div>
-<!--       <div class="mapBox">
-        <google-map />
-      </div> -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
  import moment from 'moment';
-//import GoogleMap from "@/components/GoogleMap";
 export default {
-/*   components: {
-    GoogleMap
-  }, */
   data() {
     return {
       donors: [],
@@ -229,7 +222,7 @@ export default {
 }
 .requestedBloodGroup .bloodName {
   background-color: #b34646;
-  color: rgb(223, 236, 240) !important;
+  color: rgb(240, 218, 218) !important;
 }
 .requestedBloodGroup .bloodGroupCount label {
   color: #b34646;
@@ -284,11 +277,6 @@ export default {
   margin-bottom: 10px;
   border-radius: 10px;
 }
-.mapBox {
-  width: 33%;
-  height: 600px;
-  overflow:hidden;
-}
 .userInfo {
   list-style-type: none;
   padding-left: 15px;
@@ -302,7 +290,7 @@ export default {
   border-top-right-radius: 10px;
 }
 .nameDonors {
-  background-image: linear-gradient(to right, #5c73c0 , #99b2e0);
+  background-image: linear-gradient(to right, #33819c , rgb(128, 203, 228));
 }
 .nameDonorsCan {
   background-image: linear-gradient(to right, #548c54 , #99e099);

@@ -5,7 +5,7 @@ import store from './store'
 import axios from 'axios'
 import moment from 'moment'
 
-import * as VueGoogleMaps from "vue2-google-maps";
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueGoogleMaps, {
   load: {

@@ -44,15 +44,11 @@
           </div>
           <div class="form-group">
             <label class="label" for="residence">Adresa</label>
-            <input
-                type="text"
-                placeholder="Unesite adresu"
-                v-model="residence"
-                name="residence"
-                id="autocomplete"
-                class="form-control residenceR"
-                maxlength="50"
-            />
+              <GmapAutocomplete @place_changed="setPlace"
+              class="form-control residenceR"
+              name="residence"
+              :options="{fields: ['geometry', 'address_components', 'formatted_address']}">
+              </GmapAutocomplete>
           </div>
           <div class="form-group birthdayRegister">
             <label class="label" for="birthdate">Datum rođenja</label>
@@ -168,6 +164,9 @@ export default {
   },
   methods: {
     ...mapActions(["register"]),
+    setPlace(place) {
+      this.residence = place.formatted_address
+    },
     registerUser() {
       var now = new Date();
       const date2 = new Date(this.donationDate)
