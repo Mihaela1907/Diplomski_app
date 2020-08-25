@@ -95,9 +95,12 @@
           </div>
         </div>
       </div>
-
+      <div style="width: 31%;margin-left:30px;font-size:20px;font-weight:500;color:#494949;">
+        <label>Svi donori</label>
+        <label style="float:right;">Mogu donirati</label>
+      </div>
       <div class="donorsAll">
-        <div class="donorsItem" v-for="item in donors" :key="item.id">
+        <div class="donorsItem" v-for="item in donors.slice(0, 4)" :key="item.id">
           <li class="userInfo nameDonors" id="noDonors">{{ item.name.toUpperCase() }}
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
@@ -105,9 +108,10 @@
           <li class="userInfo residenceDonors">{{ item.residence }}</li>
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
+        <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
       </div>
       <div class="canDonors">
-        <div class="canDonorsItem" v-for="item in canDonate" :key="item.id">
+        <div class="canDonorsItem" v-for="item in canDonate.slice(0, 4)" :key="item.id">
           <li class="userInfo nameDonorsCan">{{ item.name.toUpperCase() }}
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
@@ -115,6 +119,7 @@
           <li class="userInfo residenceDonors">{{ item.residence }}</li>
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
+        <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
       </div>
 <!--       <div class="mapBox">
         <google-map />
@@ -259,10 +264,10 @@ export default {
   float: right;
 }
 .canDonors, .donorsAll {
-  width: 25%;
+  width: 21%;
   float: left;
-  height: 550px;
-  overflow-y: auto;
+  height: 660px;
+  margin-top: 5px;
 }
 .canDonors {
   padding-left: 10px;
@@ -271,11 +276,13 @@ export default {
 .donorsAll {
   padding-left: 5px;
   padding-right: 10px;
+  margin-left: 25px;
 }
 .canDonorsItem, .donorsItem {
   padding-bottom: 10px;
   background-color: white;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 .mapBox {
   width: 33%;
@@ -291,6 +298,8 @@ export default {
   font-weight: 500;
   height: 35px;
   line-height: 35px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .nameDonors {
   background-image: linear-gradient(to right, #5c73c0 , #99b2e0);
