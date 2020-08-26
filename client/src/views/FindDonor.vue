@@ -51,8 +51,8 @@
         <li class="userInfo phoneDonors">+385 {{ items.phonenumber }}</li>
       </div>
     </div>
+    <p style="margin-left: 30px;">Svi donori:</p>
     <div class="allFindDonors">
-      <p>Svi donori:</p>
       <div class="donorsItem" v-for="item in allDonors" :key="item.id">
         <li class="userInfo nameDonorsAll" id="noDonors">{{ item.name.toUpperCase() }}</li>
         <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+let google = window.google; 
 import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
@@ -76,29 +77,51 @@ export default {
       bloodPlace: [],
       tempCan: [],
       tempIndex: [],
-      list: []
+      list: [],
+      searchPlace: null,
+      userPlace: ""
     };
   },
   computed: mapGetters(["users"]),
   methods: {
     ...mapActions(["getUsers"]),
     setPlace(place) {
-      if(place.address_components.length > 4) {
+      if(place.address_components.length > 5 || place.address_components.length == 1) {
         alert("Unesite grad!")
       } else {
-        this.bloodPlace = place.address_components[0].long_name 
+        this.bloodPlace = place.address_components[0].long_name
+        this.searchPlace = place 
+        console.log(this.searchPlace)
       }
     },
     searchForDonor() {
       if(this.bloodGroup && this.bloodAmount && this.bloodPlace != "")
       {
         var grupa = this.bloodGroup
-        var mjesto = this.bloodPlace
-        this.list = this.potentialDonors.filter(function(result) {
-        return result.bloodgroup === grupa  &&  result.residence[3] === mjesto;
-       });
+        if (this.searchPlace) {
+          var a = new google.maps.LatLng(this.searchPlace.geometry.location.lat(), this.searchPlace.geometry.location.lng());
+        }
+
+        this.list = this.potentialDonors.filter(function(result) { 
+          var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
+          console.log(google.maps.geometry.spherical.computeDistanceBetween(a,b));
+          var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
+          return result.bloodgroup === grupa  &&  dist < 10000;  
+        });
+
         if(this.list.length == 0){
-          document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+
+          this.list = this.potentialDonors.filter(function(result) { 
+            var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
+            console.log(google.maps.geometry.spherical.computeDistanceBetween(a,b));
+            var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
+            return result.bloodgroup === grupa  &&  dist < 100000;  
+          });
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+            }
         } else {
           document.getElementById("notifi").innerText = "Potencijalni donori:"
         } 
@@ -151,7 +174,7 @@ export default {
   color: rgb(110, 110, 110);
 }
 .bloodInfo {
-  width: 20%;
+  width: 30%;
   margin: 0 auto;
 }
 .bloodGroupBox {
@@ -170,6 +193,8 @@ export default {
   background-color: rgb(217, 237, 255);
 }
 .allFindDonors {
+  width: 90%;
+  margin: 0 auto;
   height: 500px;
   overflow-y: auto;
 }
