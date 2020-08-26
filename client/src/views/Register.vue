@@ -155,7 +155,7 @@ export default {
       name: "",
       email: "",
       birthdate: "",
-      residence: "",
+      residence: [],
       bloodgroup: "",
       phonenumber: "",
       sex: [],
@@ -165,7 +165,14 @@ export default {
   methods: {
     ...mapActions(["register"]),
     setPlace(place) {
-      this.residence = place.formatted_address
+      this.residence[0] = place.address_components[1].long_name
+      this.residence[1] = place.address_components[0].long_name
+      this.residence[2] = place.address_components[6].long_name
+      this.residence[3] = place.address_components[2].long_name
+      this.residence[4] = place.address_components[5].long_name
+      this.residence[5] = place.geometry.location.lat()
+      this.residence[6] = place.geometry.location.lng()
+      console.log(this.residence)
     },
     registerUser() {
       var now = new Date();

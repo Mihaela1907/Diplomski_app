@@ -24,19 +24,19 @@
       id="bloodAmount"
       type="number"
       name="bloodAmount"
+      placeholder="Unesite količinu"
       v-model="bloodAmount"
       class="form-control"
       min="1" 
       max="999"
       >
       <label for="bloodPlace">Grad:</label>
-      <input
-      id="bloodPlace"
-      type="text"
-      name="bloodPlace"
-      v-model="bloodPlace"
-      class="form-control"
-      >
+      <GmapAutocomplete @place_changed="setPlace"
+        class="form-control"
+        name="bloodPlace"
+        onfocus="this.value=''" 
+        :options="{fields: ['geometry', 'address_components', 'formatted_address']}">
+      </GmapAutocomplete>
       <button class="btn btn-primary" v-on:click="searchForDonor()"
       style="width:100%;margin-top:10px">Traži</button>
     </div>
@@ -47,7 +47,7 @@
         <li class="userInfo nameDonors" id="noDonors">{{ items.name.toUpperCase() }}</li>
         <li class="userInfo donationDonors">Posljednja donacija: {{ moment(items.donationDate[0]).format('DD.MM.YYYY.') }}</li>
         <li class="userInfo bgroupDonors">{{ items.bloodgroup }}</li>
-        <li class="userInfo residenceDonors">{{ items.residence }}</li>
+        <li class="userInfo residenceDonors">{{ items.residence[0]+" "+items.residence[1]+", "+items.residence[3]}}</li>
         <li class="userInfo phoneDonors">+385 {{ items.phonenumber }}</li>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <li class="userInfo nameDonorsAll" id="noDonors">{{ item.name.toUpperCase() }}</li>
         <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
         <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
-        <li class="userInfo residenceDonors">{{ item.residence }}</li>
+        <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
         <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
       </div>
     </div>
@@ -73,7 +73,7 @@ export default {
       potentialDonors: [],
       bloodGroup: "",
       bloodAmount: "",
-      bloodPlace: "",
+      bloodPlace: [],
       tempCan: [],
       tempIndex: [],
       list: []
@@ -82,13 +82,20 @@ export default {
   computed: mapGetters(["users"]),
   methods: {
     ...mapActions(["getUsers"]),
+    setPlace(place) {
+      if(place.address_components.length > 4) {
+        alert("Unesite grad!")
+      } else {
+        this.bloodPlace = place.address_components[0].long_name 
+      }
+    },
     searchForDonor() {
       if(this.bloodGroup && this.bloodAmount && this.bloodPlace != "")
       {
         var grupa = this.bloodGroup
         var mjesto = this.bloodPlace
         this.list = this.potentialDonors.filter(function(result) {
-        return result.bloodgroup === grupa  &&  result.residence === mjesto;
+        return result.bloodgroup === grupa  &&  result.residence[3] === mjesto;
        });
         if(this.list.length == 0){
           document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."

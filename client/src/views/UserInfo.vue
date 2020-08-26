@@ -50,18 +50,14 @@
       </div>
       <div class="form-group Card">
         <div class="Item">Adresa:</div>
-          <div class="Data">{{ user.residence }}</div>
+          <div class="Data">{{ user.residence[0]+" "+user.residence[1]+", "+user.residence[3]+", "+user.residence[4]}}</div>
           <div class="Edit" v-on:click="hide = !hide">Uredi</div>
-          <input
+          <GmapAutocomplete @place_changed="setPlace"
             v-if="!hide"
-            type="text"
-            placeholder="Unesite adresu"
-            v-model="residence"
-            name="residence"
-            id="autocomplete"
             class="inputData"
-            maxlength="50"
-          />
+            name="residence"
+            :options="{fields: ['geometry', 'address_components', 'formatted_address']}">
+          </GmapAutocomplete>
         <button 
           v-if="!hide"
           class="btn btn-primary updateBtn" 
@@ -93,14 +89,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-const google = window.google;
 export default {
   data() {
     return {
       username: "",
       name: "",
       surname: "",
-      residence: "",
+      residence: [],
       phonenumber:"",
       show: false,
       isHidden: true,      
@@ -134,6 +129,15 @@ export default {
         }
       });
     },
+    setPlace(place) {
+      this.residence[0] = place.address_components[1].long_name
+      this.residence[1] = place.address_components[0].long_name
+      this.residence[2] = place.address_components[6].long_name
+      this.residence[3] = place.address_components[2].long_name
+      this.residence[4] = place.address_components[5].long_name
+      this.residence[5] = place.geometry.location.lat()
+      this.residence[6] = place.geometry.location.lng()
+    },
     updateResidence() {
       let user = {
         _id: this.user._id,
@@ -159,11 +163,6 @@ export default {
   },
   created() {
     this.getProfile();
-  },
-  mounted() {
-    new google.maps.places.Autocomplete(
-      document.getElementById("autocomplete")
-    );
   }
 };
 </script>

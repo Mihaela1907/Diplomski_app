@@ -105,7 +105,7 @@
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
           <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
-          <li class="userInfo residenceDonors">{{ item.residence }}</li>
+          <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
         <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
@@ -116,7 +116,7 @@
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
           <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
-          <li class="userInfo residenceDonors">{{ item.residence }}</li>
+          <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
         <button class="btn btn-primary" style="width:100%;">Vidi sve</button>

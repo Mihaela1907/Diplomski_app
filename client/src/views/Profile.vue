@@ -22,14 +22,15 @@
 
     <div class="secondBox">
       <li class="none name">{{ user.name }}</li>
-      <li class="none adress">{{ user.residence }}</li>
+      <li class="none adress">{{ user.residence[3]+", "+user.residence[4]}}</li>
       <li class="none bGroup">{{ user.bloodgroup }}</li>
     </div>
     
     <div class="thirdBox"> 
       <li class="list-group-item phone">+385 {{ user.phonenumber}}</li>
       <li class="list-group-item email">{{ user.email}}</li>
-      <li class="list-group-item address">{{ user.residence }}</li>
+      <li class="list-group-item address">
+        {{ user.residence[0]+" "+user.residence[1]+", "+user.residence[3]+", "+user.residence[4]}}</li>
       <br>
       <li class="list-group-item info infoUser">Datum rođenja: {{ moment(user.birthdate).format('DD.MM.YYYY.')}}</li>
       <li class="list-group-item info infoUser">Spol: {{ user.sex }}</li>

@@ -23,10 +23,10 @@ const UserSchema = new Schema({
         type: Date,
         required: true
     },
-    residence: {
+    residence: [{
         type: String,
         required: true
-    },
+    }],
     bloodgroup: {
         type: String,
         required: true
