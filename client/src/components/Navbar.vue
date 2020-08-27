@@ -36,6 +36,9 @@
           <router-link to="/donations" class="nav-link tab">Donacije</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedIn && !isBasic">
+          <router-link to="/adminmain" class="nav-link tab">Naslovnica</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn && !isBasic">
           <router-link to="/donors" class="nav-link tab">Donori</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedIn && !isBasic">

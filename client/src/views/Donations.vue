@@ -1,14 +1,20 @@
 <template>
-  <div>
-    <h2>Donations</h2>
-    <div class="card" v-if="user">
-      <ul class="list-group">
-        <form >
-          <div class="form-group">
+  <div class="donations">
+    <div class="sidenavDonations">
+      <a href="#tkoMoze">2020.</a>
+      <a href="#kako">2019.</a>
+      <a href="#gdje">2018.</a>
+      <a href="#tkoJe">2017.</a>
+      <a href="#tkoNemoze">2016.</a>
+      <a href="#kolikoCesto">Dodaj datum donacije</a>
+    </div>
+
+    <div class="dateList" v-if="user">
+          <div class="dateBox">
             <div class="dateList">
-              <li class="list-group-item" v-for="(item,index) in dates" :key="item.id">
-                Date: {{ moment(item).format('DD.MM.YYYY.') }} 
-                <button class="btn btn-primary" v-on:click="removeElement(index)">
+              <li class="dateItem" v-for="(item,index) in dates" :key="item.id">
+                {{ moment(item).format('DD.MM.YYYY.') }} 
+                <button class="btn btn-primary dateItemDelete" v-on:click="removeElement(index)">
                   X
                 </button>
               </li>
@@ -18,13 +24,12 @@
               type="date"
               name="donationDate"
               v-model="donationDate"
-              class="form-control"
+              class="form-control dateItemInput"
             >
+            <button class="btn btn-primary dateItemInputBtn" v-on:click="checkDate()">Dodaj datum donacije</button>
           </div>
-          <button class="btn btn-primary" v-on:click="checkDate()">Add date</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-        </form>
-      </ul>
+          
+          
     </div>
   </div>
 </template>
@@ -95,11 +100,7 @@ export default {
             _id: this.user._id,
             dates: this.dates,
           };
-        this.addDonation(user).then(res => {
-            if (res.data.success) {
-              this.$router.go();
-            }
-        });
+        this.addDonation(user)
       }             
     }
   },
@@ -122,8 +123,62 @@ export default {
 </script>
 
 <style>
+.sidenavDonations {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 150px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: rgb(73, 109, 121);
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 70px;
+  box-shadow: 0px 3px 10px 3px #000000;
+}
+.sidenavDonations a {
+  padding: 6px 15px 6px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(219, 219, 219);
+  display: block;
+}
+.sidenavDonations a:hover {
+  color: #f1f1f1;
+}
+.donations {
+  width: 89%;
+  height: 1000px;
+  margin-left: 148px;
+}
 .dateList {
-  height: 200px;
-  overflow-y: auto;
+  padding-top: 15px;
+  padding-left: 20px;
+  background-color: white;
+  padding-bottom: 20px;
+}
+.dateItem {
+  list-style-type: none;
+  height: 40px;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  margin-bottom: 10px;
+  line-height: 40px;
+  padding-left: 10px;
+  margin-right: 20px;
+}
+.dateItemDelete {
+  float: right;
+  margin-right: 10px;
+  
+}
+.dateItemInput, .dateItemInputBtn {
+  margin: 0 auto;
+  width: 40%;
+}
+.dateItemInputBtn {
+  display: block;
+}
+
+.dateBox {
+  width: 100%;
 }
 </style>

@@ -59,6 +59,14 @@ const router = new Router({
       }
     },
     {
+      path: '/adminmain',
+      name: 'adminmain',
+      component: () => import('../views/AdminMain.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/donors',
       name: 'donors',
       component: () => import('../views/Donors.vue'),

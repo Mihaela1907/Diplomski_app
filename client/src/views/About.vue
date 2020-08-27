@@ -144,7 +144,8 @@
   padding-right: 20px;
   text-align: justify;
   text-justify: inter-word;
-  color: rgb(122, 122, 122);
+  color: rgb(100, 100, 100);
+  font-weight: 500;
 }
 .textBox h5 {
   color: rgb(75, 75, 75);

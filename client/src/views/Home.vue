@@ -11,7 +11,6 @@
       </div>
       <div class="bottom"></div>
     </div> -->
-    <VueMaps></VueMaps>
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12 homeBox">
         <div class="card bg-dark text-white">
@@ -64,11 +63,7 @@
 </template>
 
 <script>
-import VueMaps from "@/components/VueMaps";
 export default {
-  components: {
-    VueMaps
-  },
   name: "home"
 };
 </script>

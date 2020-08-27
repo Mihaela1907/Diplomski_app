@@ -1,106 +1,49 @@
 <template>
   <div class="donors">
-    <h1 class="display3"></h1>
+    <div style="width:100%;height:100px">
+      <div class="searchBox">
+        <select 
+        id="searchCategory" 
+        name="searchCategory" 
+        class="form-control searchTsearchCategoryerm"
+        v-model="searchCategory">
+          <option value="bloodgroup">Krvna grupa</option>
+          <option value="city">Grad</option>
+          <option value="name">Ime i prezime</option>
+          <option value="phonenumber">Kontakt</option>
+          <option value="sex">Spol</option>
+        </select>
+        <input
+          id="searchTerm"
+          type="text"
+          name="searchTerm"
+          v-model="searchTerm"
+          class="form-control"
+          maxlength="50"
+          style="width:87%;float:left;border-radius:0px"
+        >
+        <button style="float:left;width:13%;" class="btn btn-primary searchBoxBtn" v-on:click="searchByFilter()">
+          <img src="../assets/search-donors.jpg" style="height:35px;width:100%"/>
+        </button>
+      </div>
+    </div>
 
-      <div class="bloodSuply">
-        <div class="bloodInStock">
-          <div>
-            <label style="font-size:21px;font-weight:500;color:#33819c;margin-top:-10px">Zalihe krvi</label>
-            <label id="todayDate" class="todayDate"
-            style="font-weight:500;color:#33819c">Datum</label>
-          </div>
-          <div class="bloodSuplyNum">
-            <p style="font-size:14px;font-weight:500;color:#33819c;width:65px;">Ukupno</p>
-            <label style="font-size:50px;font-weight:600;color:#33819c">{{ this.bloodInStockNum }}</label>
-          </div>
-          <div class="bloodSuplyGroup">
-            <div class="bloodGroupCount">
-              <label class="bloodName">0+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">A+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">B+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">AB+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">0-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">A-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">B-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">AB-</label>
-              <label>1</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="requestedBlood">
-          <div>
-            <label style="font-size:21px;font-weight:500;color:#b34646;margin-top:-10px">Zahtjevi krvi</label>
-            <label id="todayDate2" class="todayDate"
-            style="font-weight:500;color:#b34646">Datum</label>
-          </div>
-          <div class="bloodSuplyNum">
-            <p style="font-size:14px;font-weight:500;color:#b34646;width:65px;">Ukupno</p>
-            <label style="font-size:50px;font-weight:600;color:#b34646">{{ this.bloodInStockNum }}</label>
-          </div>
-          <div class="requestedBloodGroup">
-            <div class="bloodGroupCount">
-              <label class="bloodName">0+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">A+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">B+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">AB+</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">0-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">A-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">B-</label>
-              <label>1</label>
-            </div>
-            <div class="bloodGroupCount">
-              <label class="bloodName">AB-</label>
-              <label>1</label>
-            </div>
-          </div>
+      <div class="donorsFound">
+        <div class="donorsFoundItem" v-for="inde in list" :key="inde.id">
+          <li class="userInfo nameDonors" id="noDonors">{{ inde.name.toUpperCase() }}
+          </li>
+          <li class="userInfo donationDonors">Posljednja donacija: {{ moment(inde.donationDate[0]).format('DD.MM.YYYY.') }}</li>
+          <li class="userInfo bgroupDonors">{{ inde.bloodgroup }}</li>
+          <li class="userInfo residenceDonors">{{ inde.residence[0]+" "+inde.residence[1]+", "+inde.residence[3]}}</li>
+          <li class="userInfo phoneDonors">+385 {{ inde.phonenumber }}</li>
         </div>
       </div>
-      <div style="width: 31%;margin-left:30px;font-size:20px;font-weight:500;color:#494949;">
-        <label>Svi donori</label>
-        <label style="float:right;">Mogu donirati</label>
+
+      <div style="width: 31%;margin-left:80px;font-size:25px;font-weight:500;color:#494949;">
+        Svi donori
       </div>
       <div class="donorsAll">
-        <div class="donorsItem" v-for="item in donors.slice(0, 4)" :key="item.id">
+        <div class="donorsItem" v-for="item in donors" :key="item.id">
           <li class="userInfo nameDonors" id="noDonors">{{ item.name.toUpperCase() }}
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
@@ -108,73 +51,61 @@
           <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
           <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
         </div>
-        <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
-      </div>
-      <div class="canDonors">
-        <div class="canDonorsItem" v-for="item in canDonate.slice(0, 4)" :key="item.id">
-          <li class="userInfo nameDonorsCan">{{ item.name.toUpperCase() }}
-          </li>
-          <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
-          <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
-          <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
-          <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
-        </div>
-        <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
       </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
- import moment from 'moment';
 export default {
   data() {
     return {
       donors: [],
-      canDonate: [],
-      cantDonate: [],
-      tempCan: [],
-      bloodInStockNum: 0
+      searchTerm: "",
+      searchCategory: "",
+      list: []
     }
   },
   computed: mapGetters(["users"]),
   methods: {
-    ...mapActions(["getUsers"]) 
+    ...mapActions(["getUsers"]),
+    searchByFilter() {
+      console.log(this.searchCategory)
+      console.log(this.searchTerm)
+      var category = this.searchCategory
+      console.log(category)
+      var test = this.searchTerm
+      if(category == "name") {
+        this.list = this.donors.filter(function(result) {
+          return result.name === test;  
+        });
+      } else if(category == "city") {
+        this.list = this.donors.filter(function(result) {
+          return result.residence[3] === test;  
+        });
+      } else if(category == "bloodgroup") {
+        this.list = this.donors.filter(function(result) {
+          return result.bloodgroup === test;  
+        });
+      } else if(category == "phonenumber") {
+        var proba = Number(test)
+        this.list = this.donors.filter(function(result) {
+          return result.phonenumber === proba;  
+        });
+      } else if(category == "sex") {
+        this.list = this.donors.filter(function(result) {
+          return result.sex === test;  
+        });
+      }
+      console.log(this.list)
+    } 
   },
   created() {  
     this.getUsers().then(res => {
       if (res.data.success) {
           this.donors = res.data.users;
           this.donors.shift();
-
-          for(var k=0; k<this.donors.length;k++){
-            this.bloodInStockNum = this.bloodInStockNum + this.donors[k].donationDate.length
-          }
-
-          for(var i=0; i<this.donors.length;i++){
-            const donation1 = new Date(this.donors[i].donationDate[0])
-            var donationMili = donation1.getTime();
-
-            if(this.donors[i].sex == "Muškarac"){
-              donationMili += 7776000000
-            }else if(this.donors[i].sex == "Žena") {
-              donationMili += 10368000000
-            }
-
-            var nextDonate = new Date(donationMili)
-            var now = new Date()
-
-            document.getElementById('todayDate').innerHTML = moment(now).format('DD.MM.YYYY.').toString();
-            document.getElementById('todayDate2').innerHTML = moment(now).format('DD.MM.YYYY.').toString();
-
-            if(nextDonate < now) {
-              this.tempCan.push(i)
-            }
-          }
-
-          for(var j=0;j<this.tempCan.length;j++){
-            this.canDonate[j] = this.donors[this.tempCan[j]]            
-          }
+          console.log(this.donors) 
       }
     });
   },
@@ -185,115 +116,60 @@ export default {
 .donors {
   width: 100%;
   overflow: hidden;
-  margin-top: 15px;
+  margin-top: 25px;
+  margin-bottom: 15px;
 }
-.bloodSuply {
-  height: 150px;
-  margin: 20px 10px 10px 10px;
+.searchBox {
+  width: 30%;
+  height:50px;
+  margin: 0 auto;
 }
-.requestedBlood {
-  height: 150px;
-  width: 47%;
-  background-color: rgb(230, 154, 154);
-  overflow: hidden;
-  float: right;
-  padding: 15px;
-  margin-right: 20px;
-  border-radius: 10px;
+.searchBoxBtn {
+  padding: 0;
 }
-.bloodInStock {
-  height: 150px;
-  width: 47%;
-  float: left;
-  background-color: rgb(128, 203, 228);
-  padding: 15px;
-  margin-left: 20px;
-  border-radius: 10px;
+.donorsFound {
+  width: 100%;
 }
-.bloodSuplyNum {
-  width: 15%;
-  float: left;
-  padding-left: 10px;
-}
-.bloodSuplyGroup, .requestedBloodGroup {
-  width: 85%;
-  overflow: hidden;
-  padding-left: 20px;
-}
-.requestedBloodGroup .bloodName {
-  background-color: #b34646;
-  color: rgb(240, 218, 218) !important;
-}
-.requestedBloodGroup .bloodGroupCount label {
-  color: #b34646;
-}
-.bloodGroupCount {
-  width: 11%;
-  height: 85px;
-  float: left;
-  margin-right: 5px;
+.donorsFoundItem {
   background-color: white;
   border-radius: 10px;
+  padding-bottom: 10px;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
-.bloodName {
-  background-color: #33819c;
-  border-radius: 10px;
-  color: rgb(223, 236, 240) !important;
-}
-.bloodGroupCount label {
-  width: 54px;
-  height: 35px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 500;
-  color: #33819c;
-}
-.bloodSuplyNum p {
-  margin-top: 15px;
-  margin-bottom: -15px;
-}
-.todayDate {
-  float: right;
-}
-.canDonors, .donorsAll {
-  width: 21%;
-  float: left;
-  height: 660px;
-  margin-top: 5px;
-}
-.canDonors {
-  padding-left: 10px;
-  padding-right: 5px;
+.donorsFoundItem .nameDonors {
+  background-image: linear-gradient(to right, #7349aa , rgb(188, 158, 228));
 }
 .donorsAll {
+  width: 90%;
+  margin-top: 5px;
   padding-left: 5px;
   padding-right: 10px;
-  margin-left: 25px;
+  margin: 0 auto;
 }
-.canDonorsItem, .donorsItem {
+.donorsItem {
+  width: 49%;
   padding-bottom: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
   background-color: white;
   margin-bottom: 10px;
   border-radius: 10px;
+  float: left;
 }
 .userInfo {
   list-style-type: none;
   padding-left: 15px;
 }
-.nameDonorsCan, .nameDonors {
+.nameDonors {
   font-size: 17px;
   font-weight: 500;
   height: 35px;
   line-height: 35px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-}
-.nameDonors {
   background-image: linear-gradient(to right, #33819c , rgb(128, 203, 228));
-}
-.nameDonorsCan {
-  background-image: linear-gradient(to right, #548c54 , #99e099);
 }
 .bgroupDonors, .residenceDonors, .phoneDonors {
   background-size: contain;

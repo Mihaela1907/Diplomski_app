@@ -40,7 +40,7 @@
       <br>
       <li class="list-group-item info">Donirali ste krv {{this.donations.length}} puta. </li>
       <div v-for="units in donations" :key="units.id">
-        <img class="bloodBags" src="@/assets/blood-times.jpg" alt="Blodd units" width="80" height="80">
+        <img class="bloodBags" src="@/assets/blood-times.png" alt="Blodd units" width="80" height="80">
       </div>
     </div>
   </div>

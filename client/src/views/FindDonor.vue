@@ -51,16 +51,6 @@
         <li class="userInfo phoneDonors">+385 {{ items.phonenumber }}</li>
       </div>
     </div>
-    <p style="margin-left: 30px;">Svi donori:</p>
-    <div class="allFindDonors">
-      <div class="donorsItem" v-for="item in allDonors" :key="item.id">
-        <li class="userInfo nameDonorsAll" id="noDonors">{{ item.name.toUpperCase() }}</li>
-        <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
-        <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
-        <li class="userInfo residenceDonors">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
-        <li class="userInfo phoneDonors">+385 {{ item.phonenumber }}</li>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -126,6 +116,10 @@ export default {
           document.getElementById("notifi").innerText = "Potencijalni donori:"
         } 
 
+        this.list = this.list.slice(0,this.bloodAmount)
+        if(this.list.length < this.bloodAmount) {
+          alert("Trenutno postoji samo "+this.list.length+" rezultata koji zadovoljavaju kriterije.")
+        }
       }else {
         alert("Unesite sve podatke!")
       }
@@ -192,12 +186,6 @@ export default {
   margin-bottom: 30px;
   background-color: rgb(217, 237, 255);
 }
-.allFindDonors {
-  width: 90%;
-  margin: 0 auto;
-  height: 500px;
-  overflow-y: auto;
-}
 .donorsItem {
   width: 45%;
   height: 140px;
@@ -210,7 +198,7 @@ export default {
   list-style-type: none;
   padding-left: 15px;
 }
-.nameDonors, .nameDonorsAll {
+.nameDonors {
   font-size: 17px;
   font-weight: 500;
   height: 35px;
@@ -220,9 +208,6 @@ export default {
 }
 .nameDonors {
   background-image: linear-gradient(to right, #548c54 , #99e099);
-}
-.nameDonorsAll {
-  background-image: linear-gradient(to right, #33819c , rgb(128, 203, 228));
 }
 .bgroupDonors, .residenceDonors, .phoneDonors {
   background-size: contain;

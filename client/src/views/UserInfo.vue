@@ -30,23 +30,33 @@
           v-on:click="updateName">Ažuriraj</button>
       </div>
       <div class="form-group Card">
-        <div class="Item">Korisničko ime:</div>
-          <div class="Data">{{ user.username }}</div>
+        <div class="Item">Lozinka:</div>
+          <div class="Data">Lozinka</div>
           <div class="Edit" v-on:click="isHidden = !isHidden">Uredi</div>
           <input
             v-if="!isHidden"
-            id="username"
-            type="text"
-            placeholder="Unesite korisničko ime"
-            name="username"
-            v-model="username"
+            id="password"
+            type="password"
+            placeholder="Unesite lozinku"
+            name="password"
+            v-model="password"
+            class="inputData"
+            maxlength="20"
+          >
+          <input
+            v-if="!isHidden"
+            id="confPassword"
+            type="password"
+            placeholder="Potvrdite lozinku"
+            name="confPassword"
+            v-model="confPassword"
             class="inputData"
             maxlength="20"
           >
         <button 
           v-if="!isHidden"
           class="btn btn-primary updateBtn" 
-          v-on:click="updateUsername">Ažuriraj</button>
+          v-on:click="updatePassword">Ažuriraj</button>
       </div>
       <div class="form-group Card">
         <div class="Item">Adresa:</div>
@@ -92,7 +102,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      username: "",
+      password: "",
+      confPassword: "",
       name: "",
       surname: "",
       residence: [],
@@ -107,16 +118,21 @@ export default {
   methods: {
     ...mapActions(["getProfile"]),
     ...mapActions(["updateProfile"]),
-    updateUsername() {
-      let user = {
-        _id: this.user._id,
-        username: this.username
-      };
-      this.updateProfile(user).then(res => {
-        if (res.data.success) {
-          this.$router.go();
-        }
-      });
+    updatePassword() {
+      if(this.password != this.confPassword) {
+        alert("Lozinke moraju biti jednake!")
+      } else {
+        let user = {
+          _id: this.user._id,
+          password: this.password
+        };
+        this.updateProfile(user).then(res => {
+          if (res.data.success) {
+            this.$router.go();
+          }
+        });
+      }
+      
     },
     updateName() {
       let user = {
