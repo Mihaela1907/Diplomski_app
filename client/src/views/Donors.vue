@@ -29,8 +29,11 @@
     </div>
 
       <div class="donorsFound">
-        <div class="donorsFoundItem" v-for="inde in list" :key="inde.id">
+        <div class="donorsFoundItem" v-for="(inde, index) in list" :key="inde.id">
           <li class="userInfo nameDonors" id="noDonors">{{ inde.name.toUpperCase() }}
+            <button class="btn itemDeleteDonor" v-on:click="removeDonorFiltered(index)">
+              <img src="../assets/delete-item.png" class="donorItemDelete"/>
+            </button>
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(inde.donationDate[0]).format('DD.MM.YYYY.') }}</li>
           <li class="userInfo bgroupDonors">{{ inde.bloodgroup }}</li>
@@ -43,8 +46,11 @@
         Svi donori
       </div>
       <div class="donorsAll">
-        <div class="donorsItem" v-for="item in donors" :key="item.id">
+        <div class="donorsItem" v-for="(item,index) in donors" :key="item.id">
           <li class="userInfo nameDonors" id="noDonors">{{ item.name.toUpperCase() }}
+            <button class="btn itemDeleteDonor" v-on:click="removeDonor(index)">
+              <img src="../assets/delete-item.png" class="donorItemDelete "/>
+            </button>
           </li>
           <li class="userInfo donationDonors">Posljednja donacija: {{ moment(item.donationDate[0]).format('DD.MM.YYYY.') }}</li>
           <li class="userInfo bgroupDonors">{{ item.bloodgroup }}</li>
@@ -69,11 +75,9 @@ export default {
   computed: mapGetters(["users"]),
   methods: {
     ...mapActions(["getUsers"]),
+    ...mapActions(["deleteUser"]),
     searchByFilter() {
-      console.log(this.searchCategory)
-      console.log(this.searchTerm)
       var category = this.searchCategory
-      console.log(category)
       var test = this.searchTerm
       if(category == "name") {
         this.list = this.donors.filter(function(result) {
@@ -97,15 +101,31 @@ export default {
           return result.sex === test;  
         });
       }
-      console.log(this.list)
-    } 
+    },
+    removeDonor(index) {
+      if(confirm("Jeste li sigurni da želite ukloniti izabranog korisnika?")){
+           let user = {
+            _id: this.donors[index]._id
+          }; 
+        this.deleteUser(user);
+        this.$router.go()
+      }
+    },
+    removeDonorFiltered(index) {
+      if(confirm("Jeste li sigurni da želite ukloniti izabranog korisnika?")){
+           let user = {
+            _id: this.list[index]._id
+          }; 
+        this.deleteUser(user);
+        this.$router.go()
+      }
+    }
   },
   created() {  
     this.getUsers().then(res => {
       if (res.data.success) {
           this.donors = res.data.users;
-          this.donors.shift();
-          console.log(this.donors) 
+          this.donors.shift(); 
       }
     });
   },
@@ -157,6 +177,25 @@ export default {
   margin-bottom: 10px;
   border-radius: 10px;
   float: left;
+}
+.donorItemDelete {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  margin-bottom: 5px;
+  border: 0;
+  outline: 0;
+}
+.deleteDonorBtn {
+  border: 0;
+  outline: 0;
+}
+.itemDeleteDonor {
+  margin-top: 4px;
+  margin-right: 5px;
+  float: right;
+  background-color: transparent;
+  padding: 0;
 }
 .userInfo {
   list-style-type: none;

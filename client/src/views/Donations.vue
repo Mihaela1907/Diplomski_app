@@ -94,7 +94,7 @@ export default {
       }
     },
     removeElement(index) {
-      if(confirm("Are you sure you want to delete?")){
+      if(confirm("Jeste li sigurni da želite ukloniti izabrani datum?")){
         this.$delete(this.dates, index);
           let user = {
             _id: this.user._id,
@@ -168,7 +168,6 @@ export default {
 .dateItemDelete {
   float: right;
   margin-right: 10px;
-  
 }
 .dateItemInput, .dateItemInputBtn {
   margin: 0 auto;

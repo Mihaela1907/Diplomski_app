@@ -1,12 +1,11 @@
 <template>
   <div class="admin">
-    <h1 class="display3"></h1>
-
       <div class="bloodSuply">
         <div class="bloodInStock">
           <div>
             <label style="font-size:21px;font-weight:500;color:#33819c;margin-top:-10px">Zalihe krvi
-              <button class="btn btn-primary" style="padding:1px;font-size:12px;background-color:#33819c;margin-bottom:5px">Uredi</button>
+              <router-link to="/bloodsupply" class="btn btn-primary" style="padding:1px;font-size:12px;
+              background-color:#33819c;margin-bottom:5px">Uredi</router-link>
             </label>
             <label id="todayDate" class="todayDate"
             style="font-weight:500;color:#33819c">Datum</label>
@@ -97,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div style="width: 31%;margin-left:30px;font-size:20px;font-weight:500;color:#494949;">
+      <div style="width: 35%;margin-left:30px;font-size:20px;font-weight:500;color:#494949;">
         <label>Svi donori</label>
         <label style="float:right;">Mogu donirati</label>
       </div>
@@ -121,16 +120,22 @@
           <li class="userInfoAdmin residenceAdmin">{{ item.residence[0]+" "+item.residence[1]+", "+item.residence[3]}}</li>
           <li class="userInfoAdmin phoneAdmin">+385 {{ item.phonenumber }}</li>
         </div>
-        
-        <button class="btn btn-primary" style="width:100%;">Vidi sve</button>
+        <router-link to="/finddonor" class="btn btn-primary" style="width:100%;">Vidi sve</router-link>
+      </div>
+      <div class="mapsBox">
+        <VueMaps></VueMaps>
       </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
- import moment from 'moment';
+import moment from 'moment';
+import VueMaps from '@/components/VueMaps.vue'
 export default {
+  components: {
+    VueMaps
+  },
   data() {
     return {
       donors: [],
@@ -277,7 +282,7 @@ export default {
   float: right;
 }
 .canAdmin, .allDonorsAdmin {
-  width: 21%;
+  width: 25%;
   float: left;
   height: 660px;
   margin-top: 5px;
@@ -334,5 +339,12 @@ export default {
 .donationAdmin {
   font-weight: 500;
   color: #6e6e6e;
+}
+.mapsBox {
+  width: 45%;
+  height: auto;
+  margin-top: 7px;
+  margin-left: 40px;
+  float: left;
 }
 </style>

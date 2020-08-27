@@ -5,7 +5,7 @@
       <Errors v-if="error" :msg="error"/>
       <router-view/>
     </div>
-    <footer></footer>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -13,10 +13,12 @@
 import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
 import Errors from "@/components/Errors";
+import Footer from "@/components/Footer"
 export default {
   components: {
     Navbar,
-    Errors
+    Errors,
+    Footer
   },
   computed: {
     ...mapGetters(["error"])
@@ -32,12 +34,5 @@ export default {
 }
 .app {
   background-color: lightblue;
-}
-footer {
-  background-color: #343A40;
-  height: 300px;
-  box-shadow: 10px 3px 10px 10px #464646;
-  z-index: 1000;
-  position:relative;
 }
 </style>

@@ -7,27 +7,6 @@ const key = require('../../config/keys').secret;
 const User = require('../../model/User');
 
 /**
- * @route POST api/users/profile/donationDate
- * @desc Add donation
- * @access Private
- */
-
-router.post('/profile/:_id/donationDate', passport.authenticate('jwt', {
-    session: false
-}), (req, res, next) => {
-    User.findById(req.params._id).then(function(user){
-        if(!user){return res.sendStatus(401);}
-        user.donationDate = req.body.dates;
-        return user.save().then(function(){
-            return res.json({
-                user: user, 
-                success: true
-            });
-        });
-    }).catch(next);
-});
-
-/**
  * @route POST api/users/register
  * @desc Register the User
  * @access Public
@@ -49,7 +28,7 @@ router.post('/register', (req, res) => {
     } = req.body
     if (password !== confirm_password) {
         return res.status(400).json({
-            msg: "Password do not match."
+            msg: "Lozinke se ne podudaraju!"
         });
     }
     // Check for the unique Username
@@ -58,7 +37,7 @@ router.post('/register', (req, res) => {
     }).then(user => {
         if (user) {
             return res.status(400).json({
-                msg: "Username is already taken."
+                msg: "Korisničko ime se već koristi!"
             });
         }
     })
@@ -68,7 +47,7 @@ router.post('/register', (req, res) => {
     }).then(user => {
         if (user) {
             return res.status(400).json({
-                msg: "Email is already registred. Did you forgot your password."
+                msg: "E-mail se već koristi!"
             });
         }
     });
@@ -112,7 +91,7 @@ router.post('/login', (req, res) => {
     }).then(user => {
         if (!user) {
             return res.status(404).json({
-                msg: "Username is not found.",
+                msg: "Korisničko ime nije pronađeno.",
                 success: false
             });
         }
@@ -146,7 +125,7 @@ router.post('/login', (req, res) => {
                 })
             } else {
                 return res.status(404).json({
-                    msg: "Incorrect password.",
+                    msg: "Netočna lozinka!",
                     success: false
                 });
             }
@@ -167,6 +146,32 @@ router.get('/profile', passport.authenticate('jwt', {
         success: true
     });
 });
+
+/**
+ * @route DELETE api/users
+ * @desc DELETE user from database
+ * @access Private
+ */
+
+router.delete('/:_id' , function (req , res) {
+    User.findByIdAndRemove(req.params._id)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({
+          message: "User not found ",
+        });
+      }
+        return res.json({
+            users: users, 
+            success: true
+        });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: "Could not delete user ",
+      });
+    });
+   });
 
 /**
  * @route GET api/users
@@ -212,6 +217,27 @@ router.put('/profile/:_id', passport.authenticate('jwt', {
         if(typeof req.body.sex !== 'undefined'){
             user.sex = req.body.sex;
         }
+        return user.save().then(function(){
+            return res.json({
+                user: user, 
+                success: true
+            });
+        });
+    }).catch(next);
+});
+
+/**
+ * @route POST api/users/profile/donationDate
+ * @desc Add donation
+ * @access Private
+ */
+
+router.post('/profile/:_id/donationDate', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    User.findById(req.params._id).then(function(user){
+        if(!user){return res.sendStatus(401);}
+        user.donationDate = req.body.dates;
         return user.save().then(function(){
             return res.json({
                 user: user, 

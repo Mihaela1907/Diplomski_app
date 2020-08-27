@@ -81,6 +81,14 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/bloodsupply',
+      name: 'bloodsupply',
+      component: () => import('../views/BloodSupply.vue'),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });

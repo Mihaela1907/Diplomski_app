@@ -86,6 +86,21 @@ const actions = {
         commit('users_profile', res.data.users)
         return res;
     },
+    //Delete user from database
+    async deleteUser({
+        commit
+    }, userData) {
+        try {
+            commit('users_update_request');
+            let res = await axios.delete(`http://localhost:5000/api/users/${userData._id}`, userData)
+            if (res.data.success !== undefined) {
+                commit('users_update_success');
+            }
+            return res;
+        } catch (err) {
+            commit('users_update_error', err)
+        }
+    },
     // Update user profile
      async updateProfile({
         commit
@@ -165,6 +180,17 @@ const mutations = {
         state.status = 'success'
     },
     update_error(state, err) {
+        state.error = err.response.data.msg
+    },
+    users_update_request(state) {
+        state.error = null
+        state.status = 'loading'
+    },
+    users_update_success(state) {
+        state.error = null
+        state.status = 'success'
+    },
+    users_update_error(state, err) {
         state.error = err.response.data.msg
     },
     donation_request(state) {

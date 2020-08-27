@@ -39,6 +39,8 @@
       </GmapAutocomplete>
       <button class="btn btn-primary" v-on:click="searchForDonor()"
       style="width:100%;margin-top:10px">Traži</button>
+      <button class="btn btn-primary" v-on:click="showAllDonors()"
+      style="width:100%;margin-top:10px">Prikaži sve potencijalne donore</button>
     </div>
 
     <div class="potentialDonors">
@@ -81,8 +83,12 @@ export default {
       } else {
         this.bloodPlace = place.address_components[0].long_name
         this.searchPlace = place 
-        console.log(this.searchPlace)
       }
+    },
+    showAllDonors() {
+      this.list = this.potentialDonors.filter(function(result) { 
+        return result;  
+      });
     },
     searchForDonor() {
       if(this.bloodGroup && this.bloodAmount && this.bloodPlace != "")
@@ -94,7 +100,6 @@ export default {
 
         this.list = this.potentialDonors.filter(function(result) { 
           var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
-          console.log(google.maps.geometry.spherical.computeDistanceBetween(a,b));
           var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
           return result.bloodgroup === grupa  &&  dist < 10000;  
         });
@@ -103,7 +108,6 @@ export default {
 
           this.list = this.potentialDonors.filter(function(result) { 
             var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
-            console.log(google.maps.geometry.spherical.computeDistanceBetween(a,b));
             var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
             return result.bloodgroup === grupa  &&  dist < 100000;  
           });
@@ -153,6 +157,7 @@ export default {
             this.potentialDonors[j] = this.allDonors[this.tempCan[j]]            
           }
       }
+      this.showAllDonors()
     });
   },
 }
@@ -178,7 +183,7 @@ export default {
   width: 100%;
 }
 .potentialDonors {
-  max-height: 500px;
+  max-height: 1000px;
   overflow-y: auto;
   width: 95%;
   margin: 0 auto;

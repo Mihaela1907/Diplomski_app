@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -172,17 +173,17 @@ export default {
       this.residence[4] = place.address_components[5].long_name
       this.residence[5] = place.geometry.location.lat()
       this.residence[6] = place.geometry.location.lng()
-      console.log(this.residence)
     },
     registerUser() {
       var now = new Date();
       const date2 = new Date(this.donationDate)
       const date3 = new Date(this.birthdate)
+      var date4 = moment(date3).add(18, 'years')
 
       if (date2 > now) {
         alert("Pokušavate dodati budući datum donacije!");
-      }else if (date3 > now){
-        alert("Dodajte ispravan datum rođenja!")
+      }else if (date3 > now || date4._d > now){
+        alert("Trebate biti stariji od 18 godina!")
       }else {
         let user = {
           username: this.username,

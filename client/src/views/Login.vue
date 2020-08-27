@@ -58,7 +58,7 @@ export default {
           if (res.data.success && res.data.role == "basic") {
             this.$router.push("/profile");
           } else if (res.data.success && res.data.role == "admin") {
-            this.$router.push("/donors");
+            this.$router.push("/adminmain");
           }
         })
         .catch(err => {
