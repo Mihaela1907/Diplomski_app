@@ -61,13 +61,13 @@ export default {
 
         if(this.user.sex == "Muškarac") {
           if(result < 90) {
-            alert("Difference between dates has to be 3 months!");
+            alert("Razlika između doniranja treba biti 3 mjeseca!");
           }else {
             this.addDonations();
           }
         } else if (this.user.sex == "Žena") {
           if(result < 120) {
-            alert("Difference between dates has to be 4 months!");
+            alert("Razlika između doniranja treba biti 4 mjeseca!");
             console.log(result)
           }else {
             this.addDonations();
@@ -90,7 +90,7 @@ export default {
           this.dates.sort(date_sort_desc);
         this.addDonation(user)
       }else {
-        alert("Please choose a date!");
+        alert("Izaberite datum!");
       }
     },
     removeElement(index) {

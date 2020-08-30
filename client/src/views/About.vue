@@ -101,7 +101,7 @@
   background-color: rgb(73, 109, 121);
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 70px;
-   box-shadow: 0px 3px 10px 3px #000000;
+  box-shadow: 0px 3px 10px 3px #000000;
 }
 .sidenav a {
   padding: 6px 15px 6px 16px;

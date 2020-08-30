@@ -19,6 +19,16 @@
           <option value="0-">0-</option>
         </select>
       </div>
+
+      <div class="form-group bloodUseBox">
+        <label class="label" for="critical">Potražnja za:</label>
+        <br>
+        <input type="radio" id="critical" value="critical" v-model="use">
+        <label class="radio bloodUse" for="critical">Pacijent</label>
+        <input type="radio" id="supply" value="supply" v-model="use">
+        <label class="radio bloodUse" for="supply">Zalihe</label>
+      </div>
+
       <label for="bloodAmount">Količina:</label>
       <input
       id="bloodAmount"
@@ -71,7 +81,8 @@ export default {
       tempIndex: [],
       list: [],
       searchPlace: null,
-      userPlace: ""
+      userPlace: "",
+      use: ""
     };
   },
   computed: mapGetters(["users"]),
@@ -91,41 +102,165 @@ export default {
       });
     },
     searchForDonor() {
-      if(this.bloodGroup && this.bloodAmount && this.bloodPlace != "")
+      if(this.bloodGroup && this.bloodAmount && this.bloodPlace != "" && this.use != "")
       {
-        var grupa = this.bloodGroup
-        if (this.searchPlace) {
-          var a = new google.maps.LatLng(this.searchPlace.geometry.location.lat(), this.searchPlace.geometry.location.lng());
+        if(this.use == "supply") {
+          this.supplySearch()
+        } else {
+          this.criticalSearch()
         }
+      }else {
+        alert("Unesite sve podatke!")
+      }
+    },
+    filterDonors(group1, group2, group3, group4, group5, group6, group7, group8, place) {
+      var filterGrupa1 = group1
+      var filterGrupa2 = group2
+      var filterGrupa3 = group3
+      var filterGrupa4 = group4
+      var filterGrupa5 = group5
+      var filterGrupa6 = group6
+      var filterGrupa7 = group7
+      var filterGrupa8 = group8
+      if (this.searchPlace) {
+        var x = new google.maps.LatLng(this.searchPlace.geometry.location.lat(), this.searchPlace.geometry.location.lng());
+      }
+      this.list = this.potentialDonors.filter(function(result) { 
+        var y = new google.maps.LatLng(result.residence[5], result.residence[6]);
+        var dist = google.maps.geometry.spherical.computeDistanceBetween(x,y);
+        var distance = place
+        return (result.bloodgroup === filterGrupa1 || result.bloodgroup === filterGrupa2 ||
+          result.bloodgroup === filterGrupa3 || result.bloodgroup === filterGrupa4 || 
+          result.bloodgroup === filterGrupa5 || result.bloodgroup === filterGrupa6 ||
+          result.bloodgroup === filterGrupa7 || result.bloodgroup === filterGrupa8)  &&  dist < distance;
+      });
+    },
+    criticalSearch() {
+      var grupa = this.bloodGroup
 
-        this.list = this.potentialDonors.filter(function(result) { 
-          var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
-          var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
-          return result.bloodgroup === grupa  &&  dist < 10000;  
-        });
-
-        if(this.list.length == 0){
-
-          this.list = this.potentialDonors.filter(function(result) { 
-            var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
-            var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
-            return result.bloodgroup === grupa  &&  dist < 100000;  
-          });
+      if(grupa == "0-") {
+        this.supplySearch();
+      } else if(grupa == "0+") {
+        this.filterDonors("0-","0+","","","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
           } else {
             document.getElementById("notifi").innerText = "Potencijalni donori:"
-            }
+          }
         } else {
           document.getElementById("notifi").innerText = "Potencijalni donori:"
-        } 
-
-        this.list = this.list.slice(0,this.bloodAmount)
-        if(this.list.length < this.bloodAmount) {
-          alert("Trenutno postoji samo "+this.list.length+" rezultata koji zadovoljavaju kriterije.")
         }
-      }else {
-        alert("Unesite sve podatke!")
+      } else if(grupa == "A+") {
+        this.filterDonors("0-","0+","A-","A+","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else if(grupa == "A-") {
+        this.filterDonors("0-","A-","","","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else if(grupa == "B-") {
+        this.filterDonors("0-","B-","","","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else if(grupa == "B+") {
+        this.filterDonors("0-","0+","B-","B+","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else if(grupa == "AB-") {
+        this.filterDonors("0-","A-","B-","AB-","","","","", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else if(grupa == "AB+") {
+        this.filterDonors("0-","0+","A-","A+","B-","B+","AB-","AB+", 10000)
+        if(this.list.length == 0) {
+          this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
+          if(this.list.length == 0){
+            document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+          } else {
+            document.getElementById("notifi").innerText = "Potencijalni donori:"
+          }
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      }
+      this.list = this.list.slice(0,this.bloodAmount)
+      if(this.list.length < this.bloodAmount) {
+        alert("Trenutno postoji samo "+this.list.length+" rezultata koji zadovoljavaju kriterije.")
+      }
+    },
+    supplySearch() {
+      var grupa = this.bloodGroup
+      if (this.searchPlace) {
+        var a = new google.maps.LatLng(this.searchPlace.geometry.location.lat(), this.searchPlace.geometry.location.lng());
+      }
+
+      this.list = this.potentialDonors.filter(function(result) { 
+        var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
+        var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
+        return result.bloodgroup === grupa  &&  dist < 10000;  
+      });
+
+      if(this.list.length == 0){
+
+        this.list = this.potentialDonors.filter(function(result) { 
+          var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
+          var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
+          return result.bloodgroup === grupa  &&  dist < 100000;  
+        });
+        if(this.list.length == 0){
+          document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
+        } else {
+          document.getElementById("notifi").innerText = "Potencijalni donori:"
+        }
+      } else {
+        document.getElementById("notifi").innerText = "Potencijalni donori:"
+      } 
+
+      this.list = this.list.slice(0,this.bloodAmount)
+      if(this.list.length < this.bloodAmount) {
+        alert("Trenutno postoji samo "+this.list.length+" rezultata koji zadovoljavaju kriterije.")
       }
     }
   },
@@ -243,5 +378,12 @@ p {
 }
 label {
   margin: 0;
+}
+.bloodUse {
+  padding-left: 5px;
+  padding-right: 30px;
+}
+.bloodUseBox {
+  margin-bottom: 0px;
 }
 </style>

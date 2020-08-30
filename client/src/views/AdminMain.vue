@@ -284,8 +284,9 @@ export default {
 .canAdmin, .allDonorsAdmin {
   width: 25%;
   float: left;
-  height: 660px;
+  height: auto;
   margin-top: 5px;
+  margin-bottom: 20px;
 }
 .canAdmin {
   padding-left: 10px;

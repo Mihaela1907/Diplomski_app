@@ -27,7 +27,7 @@
         </button>
       </div>
     </div>
-
+      <p id="notificationP"></p>
       <div class="donorsFound">
         <div class="donorsFoundItem" v-for="(inde, index) in list" :key="inde.id">
           <li class="userInfo nameDonors" id="noDonors">{{ inde.name.toUpperCase() }}
@@ -100,6 +100,12 @@ export default {
         this.list = this.donors.filter(function(result) {
           return result.sex === test;  
         });
+      }
+
+      if(this.list.length == 0) {
+        document.getElementById("notificationP").innerText = "Ne postoje donori koji zadovoljavaju navedene kriterije."
+      } else {
+        document.getElementById("notificationP").innerText = ""
       }
     },
     removeDonor(index) {
@@ -229,5 +235,11 @@ export default {
 .donationDonors {
   font-weight: 500;
   color: #6e6e6e;
+}
+#notificationP {
+  margin-left: 80px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0px;
 }
 </style>
