@@ -4,7 +4,6 @@
     <br>
     <br>
     <GmapMap style="width: 570px; height: 570px" :zoom="7" :center="{lat: 44.555519, lng: 16.369490}">
-      <div id="hide">Hide</div>
       <GmapMarker v-for="(marker, index) in markers"
         :label= "{
           text: labelGroups[index], 
@@ -16,12 +15,6 @@
         @mouseover="showLabelData(index)"
         @mouseout="hideLabelData()"
         />
-        <!-- <GmapCircle
-            :center="{lat: 45.5522199, lng: 18.6987464}"
-            :radius="1000"
-            :visible="true"
-            :options="{fillColor:'red',fillOpacity:0.3,strokeColor:'transparent'}"
-        ></GmapCircle> -->
     </GmapMap>
   </div>
 </template>
@@ -45,7 +38,7 @@ name: "VueMaps",
     ...mapActions(["getUsers"]),
     showLabelClick(index) {
       console.log("klik")
-      alert(this.donorsInfo[index+1].name +" "+ this.labelGroups[index])
+      alert(this.donorsInfo[index].name +" "+ this.labelGroups[index])
     },
     showLabelData(index) {
       document.getElementById("hide").style.display = "block"
@@ -72,8 +65,6 @@ name: "VueMaps",
           this.lng[i] = this.donorsInfo[i].residence[6]
           this.labelGroups[i] = this.donorsInfo[i].bloodgroup
         }
-        console.log(this.labelGroups.length)
-        console.log(this.donorsInfo.length)
         for(var j=0;j<this.lat.length;j++) {
         this.markers.push({
             position: {

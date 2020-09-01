@@ -54,24 +54,35 @@ export default {
       if (date2 > now) {
         alert("Pokušavate dodati budući datum!");
       }else {
-        const date1 = new Date(this.dates[0]);
-        var result = (date1.getTime() - date2.getTime()) /(1000*60*60*24);
+        for(var i=0;i<this.dates.length;i++) {
+          const date1 = new Date(this.dates[i]);
+          var result = (date1.getTime() - date2.getTime()) /(1000*60*60*24);
 
-        if(result < 0) {result *= -1;}
-
-        if(this.user.sex == "Muškarac") {
-          if(result < 90) {
-            alert("Razlika između doniranja treba biti 3 mjeseca!");
-          }else {
-            this.addDonations();
+          if(result < 0) {result *= -1;}
+          if(this.user.sex == "Muškarac") {
+            if(result < 90) {
+              var temp = 1;
+              break;
+            }else {
+              temp = 0;
+            }
+          } else if (this.user.sex == "Žena") {
+            if(result < 120) {
+              temp = 3;
+              break;
+            }else {
+              temp = 2;
+            }
           }
-        } else if (this.user.sex == "Žena") {
-          if(result < 120) {
-            alert("Razlika između doniranja treba biti 4 mjeseca!");
-            console.log(result)
-          }else {
-            this.addDonations();
-          }
+        }
+        if(temp == 1) {
+          alert("Razlika između doniranja treba biti 3 mjeseca!");
+        }else if(temp == 0) {
+          this.addDonations();
+        }else if(temp == 3) {
+          alert("Razlika između doniranja treba biti 4 mjeseca!");
+        }else if(temp == 2) {
+          this.addDonations();
         }
       }
     },

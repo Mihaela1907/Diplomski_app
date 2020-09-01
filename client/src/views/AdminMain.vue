@@ -3,9 +3,9 @@
       <div class="bloodSuply">
         <div class="bloodInStock">
           <div>
-            <label style="font-size:21px;font-weight:500;color:#33819c;margin-top:-10px">Zalihe krvi
+            <label style="font-size:21px;font-weight:500;color:#33819c;margin-top:-10px">Donacije
               <router-link to="/bloodsupply" class="btn btn-primary" style="padding:1px;font-size:12px;
-              background-color:#33819c;margin-bottom:5px">Uredi</router-link>
+              background-color:#33819c;margin-bottom:5px">Detalji</router-link>
             </label>
             <label id="todayDate" class="todayDate"
             style="font-weight:500;color:#33819c">Datum</label>
@@ -17,35 +17,35 @@
           <div class="bloodSuplyGroup">
             <div class="bloodGroupCount">
               <label class="bloodName">0+</label>
-              <label>1</label>
+              <label id="group01">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">A+</label>
-              <label>1</label>
+              <label id="group02">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">B+</label>
-              <label>1</label>
+              <label id="group03">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">AB+</label>
-              <label>1</label>
+              <label id="group04">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">0-</label>
-              <label>1</label>
+              <label id="group05">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">A-</label>
-              <label>1</label>
+              <label id="group06">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">B-</label>
-              <label>1</label>
+              <label id="group07">1</label>
             </div>
             <div class="bloodGroupCount">
               <label class="bloodName">AB-</label>
-              <label>1</label>
+              <label id="group08">1</label>
             </div>
           </div>
         </div>
@@ -143,7 +143,9 @@ export default {
       cantDonate: [],
       tempCan: [],
       bloodInStockNum: 0,
-      temp: ""
+      temp: "",
+      temp2: "",
+      temp22: 0
     }
   },
   computed: mapGetters(["users"]),
@@ -154,6 +156,16 @@ export default {
         return result.bloodgroup === group;  
       });
       document.getElementById(groupId).innerHTML = this.temp.length
+    },
+    countDonations(bgroup, groupId) {
+      this.temp22 = 0;
+      this.temp2 = this.donors.filter(function(result) { 
+        return result.bloodgroup == bgroup;  
+      });
+      for(var l=0;l<this.temp2.length;l++) {
+        this.temp22 = this.temp22 + this.temp2[l].donationDate.length
+      }
+      document.getElementById(groupId).innerHTML = this.temp22
     }
   },
   created() {  
@@ -175,6 +187,15 @@ export default {
           for(var k=0; k<this.donors.length;k++){
             this.bloodInStockNum = this.bloodInStockNum + this.donors[k].donationDate.length
           }
+
+          this.countDonations("0+",'group01')
+          this.countDonations("A+",'group02')
+          this.countDonations("B+",'group03')
+          this.countDonations("AB+",'group04')
+          this.countDonations("0-",'group05')
+          this.countDonations("A-",'group06')
+          this.countDonations("B-",'group07')
+          this.countDonations("AB-",'group08')
 
           for(var i=0; i<this.donors.length;i++){
             const donation1 = new Date(this.donors[i].donationDate[0])

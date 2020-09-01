@@ -16,13 +16,13 @@
             {{ moment(item).format('DD.MM.YYYY.') }} 
           </li>
         </div>
-        <router-link to="/donations" class="btn btn-primary">Uredi donacije</router-link>
+        <router-link to="/donations" class="btn btn-primary info">Uredi donacije</router-link>
       </ul>
     </div>
 
     <div class="secondBox">
       <li class="none name">{{ user.name }}</li>
-      <li class="none adress">{{ user.residence[3]+", "+user.residence[4]}}</li>
+      <li class="none adress">{{ user.residence[3]+", "+user.residence[4]}}</li>  
       <li class="none bGroup">{{ user.bloodgroup }}</li>
     </div>
     
