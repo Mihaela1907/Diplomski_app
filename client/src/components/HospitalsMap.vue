@@ -22,7 +22,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-let google = window.google; 
+//let google = window.google; 
 export default {
 name: "HospitalsMap",
     data() {
@@ -86,7 +86,7 @@ name: "HospitalsMap",
             })
         }
 
-    this.getUsers().then(res => {
+    /* this.getUsers().then(res => {
       if (res.data.success) {
             for(var i=0;i<res.data.users.length;i++){
                 this.userLoc[i] = res.data.users[i].residence
@@ -98,11 +98,11 @@ name: "HospitalsMap",
             var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
 
             console.log(dist) 
-            /* var gMap = new google.maps.Map(document.getElementById('map')); 
+             var gMap = new google.maps.Map(document.getElementById('map')); 
             gMap.setZoom(13);      // This will trigger a zoom_changed on the map
-            gMap.setCenter(new google.maps.LatLng(Number(this.hospitals[0].lat), Number(this.hospitals[0].lng))); */
+            gMap.setCenter(new google.maps.LatLng(Number(this.hospitals[0].lat), Number(this.hospitals[0].lng))); 
       }
-    });
+    }); */
   },
   async mounted() {
     await this.$gmapApiPromiseLazy();

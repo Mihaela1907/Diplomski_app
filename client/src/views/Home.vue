@@ -44,7 +44,6 @@
 <script>
 import HospitalsMap from '@/components/HospitalsMap'
   export default {
-    name: 'home',
     components: {
       HospitalsMap
     }

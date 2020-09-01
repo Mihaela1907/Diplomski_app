@@ -1,35 +1,33 @@
 <template>
   <div class="donations">
     <div class="sidenavDonations">
-      <a href="#tkoMoze">2020.</a>
-      <a href="#kako">2019.</a>
-      <a href="#gdje">2018.</a>
-      <a href="#tkoJe">2017.</a>
-      <a href="#tkoNemoze">2016.</a>
-      <a href="#kolikoCesto">Dodaj datum donacije</a>
+      <a v-on:click="filterDates(1900,2100)">Svi datumi</a> 
+      <a v-on:click="filterDates(2015,2020)">2015.-2020.</a>
+      <a v-on:click="filterDates(2010,2014)">2010.-2014.</a>
+      <a v-on:click="filterDates(2005,2009)">2005.-2009.</a>
+      <a v-on:click="filterDates(2000,2004)">2000.-2004.</a>
+      <a href="#donationDate">Dodaj datum donacije</a>
     </div>
 
     <div class="dateList" v-if="user">
-          <div class="dateBox">
-            <div class="dateList">
-              <li class="dateItem" v-for="(item,index) in dates" :key="item.id">
-                {{ moment(item).format('DD.MM.YYYY.') }} 
-                <button class="btn btn-primary dateItemDelete" v-on:click="removeElement(index)">
-                  X
-                </button>
-              </li>
-            </div>
-            <input
-              id="donationDate"
-              type="date"
-              name="donationDate"
-              v-model="donationDate"
-              class="form-control dateItemInput"
-            >
-            <button class="btn btn-primary dateItemInputBtn" v-on:click="checkDate()">Dodaj datum donacije</button>
-          </div>
-          
-          
+      <div class="dateBox">
+        <input
+          id="donationDate"
+          type="date"
+          name="donationDate"
+          v-model="donationDate"
+          class="form-control dateItemInput"
+        >
+        <button class="btn btn-primary dateItemInputBtn" v-on:click="checkDate()">Dodaj datum donacije</button>
+        <div class="dateList" id="dateItem">
+          <li class="dateItem" v-for="(item,index) in lista" :key="item.id">
+            {{ moment(item).format('DD.MM.YYYY.') }} 
+            <button class="btn btn-primary dateItemDelete" v-on:click="removeElement(index)">
+              X
+            </button>
+          </li>
+        </div>
+      </div> 
     </div>
   </div>
 </template>
@@ -40,13 +38,29 @@ export default {
   data() {
     return {
       donationDate: "",
-      dates: []
+      dates: [],
+      lista: []
     }
   },
   computed: mapGetters(["user"]),
   methods: {
     ...mapActions(["addDonation"]),
-        ...mapActions(["getProfile"]),
+    ...mapActions(["getProfile"]),
+    filterDates(year1,year2) {
+      var start_date = new Date(year1+'-01-01');
+      var end_date = new Date(year2+'-12-31');
+
+      this.lista = this.dates.filter(function(result) {
+        var date = new Date(result);
+        return (date >= start_date && date <= end_date);         
+      });
+      if(this.lista.length == 0) {
+        document.getElementById("dateItem").innerHTML = "Niste unijeli donacije u ovom periodu."
+      } else if(this.lista.length > 0){
+        document.getElementById("dateItem").innerHTML = ""
+      }
+      console.log(this.lista)
+    },
     checkDate() {
       var now = new Date();
       const date2 = new Date(this.donationDate);
@@ -126,6 +140,10 @@ export default {
             return 0;
           };
           this.dates.sort(date_sort_desc);
+          for(var i=0;i<this.dates.length;i++){
+            this.dates[i]=new Date(this.dates[i])
+          }
+          
         }
       }
     );
@@ -158,7 +176,8 @@ export default {
 }
 .donations {
   width: 89%;
-  height: 1000px;
+  min-height: 700px;
+  height: 100%;
   margin-left: 148px;
 }
 .dateList {
@@ -175,6 +194,9 @@ export default {
   line-height: 40px;
   padding-left: 10px;
   margin-right: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(73, 73, 73);
 }
 .dateItemDelete {
   float: right;
