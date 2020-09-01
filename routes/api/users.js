@@ -30,54 +30,56 @@ router.post('/register', (req, res) => {
         return res.status(400).json({
             msg: "Lozinke se ne podudaraju!"
         });
-    }
-    // Check for the unique Username
-    User.findOne({
-        username: username
-    }).then(user => {
-        if (user) {
-            return res.status(400).json({
-                msg: "Korisničko ime se već koristi!"
-            });
-        }
-    })
-    // Check for the Unique Email
-    User.findOne({
-        email: email
-    }).then(user => {
-        if (user) {
-            return res.status(400).json({
-                msg: "E-mail se već koristi!"
-            });
-        }
-    });
-    // The data is valid and new we can register the user
-    let newUser = new User({
-        name,
-        username,
-        password,
-        email,
-        birthdate,
-        residence,
-        bloodgroup,
-        phonenumber,
-        sex,
-        donationDate,
-        role
-    });
-    // Hash the password
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser.save().then(user => {
-                return res.status(201).json({
-                    success: true,
-                    msg: "Hurry! User is now registered."
+    } else {
+        // Check for the Unique Username and Email
+        User.findOne({
+            username: username
+        }).then(user => {
+            if (user) {
+                return res.status(400).json({
+                    msg: "Korisničko ime se već koristi!"
                 });
-            });
-        });
-    });
+            } else {
+                User.findOne({
+                    email: email
+                }).then(user => {
+                    if (user) {
+                        return res.status(400).json({
+                            msg: "E-mail se već koristi!"
+                        });
+                    } else {
+                        // The data is valid and new we can register the user
+                        let newUser = new User({
+                            name,
+                            username,
+                            password,
+                            email,
+                            birthdate,
+                            residence,
+                            bloodgroup,
+                            phonenumber,
+                            sex,
+                            donationDate,
+                            role
+                        });
+                        // Hash the password
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                if (err) throw err;
+                                newUser.password = hash;
+                                newUser.save().then(user => {
+                                    return res.status(201).json({
+                                        success: true,
+                                        msg: "Hurry! User is now registered."
+                                    });
+                                });
+                            });
+                        });
+                    }
+                });
+            }
+        })
+    }
 });
 
 /**

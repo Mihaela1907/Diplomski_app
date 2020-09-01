@@ -19,7 +19,7 @@
           class="form-control dateItemInput"
         >
         <button class="btn btn-primary dateItemInputBtn" v-on:click="checkDate()">Dodaj datum donacije</button>
-        <div class="dateList" id="dateItem">
+        <div class="dateList">
           <li class="dateItem" v-for="(item,index) in lista" :key="item.id">
             {{ moment(item).format('DD.MM.YYYY.') }} 
             <button class="btn btn-primary dateItemDelete" v-on:click="removeElement(index)">
@@ -54,11 +54,6 @@ export default {
         var date = new Date(result);
         return (date >= start_date && date <= end_date);         
       });
-      if(this.lista.length == 0) {
-        document.getElementById("dateItem").innerHTML = "Niste unijeli donacije u ovom periodu."
-      } else if(this.lista.length > 0){
-        document.getElementById("dateItem").innerHTML = ""
-      }
       console.log(this.lista)
     },
     checkDate() {
@@ -143,7 +138,7 @@ export default {
           for(var i=0;i<this.dates.length;i++){
             this.dates[i]=new Date(this.dates[i])
           }
-          
+          this.lista = this.dates 
         }
       }
     );
