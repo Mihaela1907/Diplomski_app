@@ -54,7 +54,6 @@ export default {
         var date = new Date(result);
         return (date >= start_date && date <= end_date);         
       });
-      console.log(this.lista)
     },
     checkDate() {
       var now = new Date();
@@ -97,7 +96,8 @@ export default {
     },
     addDonations() {
       if(this.donationDate !== ""){
-        this.dates.push(this.donationDate);
+        this.dates.unshift(this.donationDate);
+
         let user = {
           _id: this.user._id,
           dates: this.dates,
@@ -108,6 +108,7 @@ export default {
             return 0;
           };
           this.dates.sort(date_sort_desc);
+
         this.addDonation(user)
       }else {
         alert("Izaberite datum!");

@@ -52,13 +52,13 @@
 
         <div class="requestedBlood">
           <div>
-            <label style="font-size:21px;font-weight:500;color:#b34646;margin-top:-10px">Donori</label>
+            <label style="font-size:21px;font-weight:500;color:#348534;margin-top:-10px">Donori</label>
             <label id="todayDate2" class="todayDate"
-            style="font-weight:500;color:#b34646">Datum</label>
+            style="font-weight:500;color:#348534">Datum</label>
           </div>
           <div class="bloodSuplyNum">
-            <p style="font-size:14px;font-weight:500;color:#b34646;width:65px;">Ukupno</p>
-            <label style="font-size:50px;font-weight:600;color:#b34646">{{ this.donors.length }}</label>
+            <p style="font-size:14px;font-weight:500;color:#348534;width:65px;">Ukupno</p>
+            <label style="font-size:50px;font-weight:600;color:#348534">{{ this.donors.length }}</label>
           </div>
           <div class="requestedBloodGroup">
             <div class="bloodGroupCount">
@@ -240,7 +240,7 @@ export default {
 .requestedBlood {
   height: 150px;
   width: 47%;
-  background-color: rgb(230, 154, 154);
+  background-color: #98DF98;
   overflow: hidden;
   float: right;
   padding: 15px;
@@ -267,11 +267,11 @@ export default {
   padding-left: 20px;
 }
 .requestedBloodGroup .bloodName {
-  background-color: #b34646;
+  background-color: #348534;
   color: rgb(240, 218, 218) !important;
 }
 .requestedBloodGroup .bloodGroupCount label {
-  color: #b34646;
+  color: #348534;
 }
 .bloodGroupCount {
   width: 11%;
