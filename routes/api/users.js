@@ -24,7 +24,8 @@ router.post('/register', (req, res) => {
         phonenumber,
         sex,
         donationDate,
-        role
+        role,
+        avaliable
     } = req.body
     if (password !== confirm_password) {
         return res.status(400).json({
@@ -60,7 +61,8 @@ router.post('/register', (req, res) => {
                             phonenumber,
                             sex,
                             donationDate,
-                            role
+                            role,
+                            avaliable
                         });
                         // Hash the password
                         bcrypt.genSalt(10, (err, salt) => {
@@ -204,20 +206,14 @@ router.put('/profile/:_id', passport.authenticate('jwt', {
         if(typeof req.body.name !== 'undefined'){
             user.name = req.body.name;
         }
-        if(typeof req.body.birthdate !== 'undefined'){
-            user.birthdate = req.body.birthdate;
-        }
         if(typeof req.body.residence !== 'undefined'){
             user.residence = req.body.residence;
-        }
-        if(typeof req.body.bloodgroup !== 'undefined'){
-            user.bloodgroup = req.body.bloodgroup;
         }
         if(typeof req.body.phonenumber !== 'undefined'){
             user.phonenumber = req.body.phonenumber;
         }
-        if(typeof req.body.sex !== 'undefined'){
-            user.sex = req.body.sex;
+        if(typeof req.body.avaliable !== 'undefined'){
+            user.avaliable = req.body.avaliable;
         }
         return user.save().then(function(){
             return res.json({

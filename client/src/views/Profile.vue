@@ -21,7 +21,15 @@
     </div>
 
     <div class="secondBox">
-      <li class="none name">{{ user.name }}</li>
+      <li class="none name" id="userName">{{ user.name }}
+        <div style="float:right" class="form-group avaliability">
+          <input type="radio" id="one" name="avaliable" value="avaliable" v-model="avaliable" v-on:click="setAvaliability()">
+          <label for="one">Nedostupan/na sam</label>
+          <br>
+          <input type="radio" id="two" name="avaliable" value="nonavaliable" v-model="avaliable" v-on:click="setAvaliability()">
+          <label for="two">Dostupan/na sam</label>
+        </div> 
+      </li>
       <li class="none adress">{{ user.residence[3]+", "+user.residence[4]}}</li>  
       <li class="none bGroup">{{ user.bloodgroup }}</li>
     </div>
@@ -52,12 +60,28 @@ export default {
   data() {
     return {
       nextDonation: "",
-      donations: []
+      donations: [],
+      avaliable: "avaliable"
     }
   },
   computed: mapGetters(["user"]),
   methods: {
-    ...mapActions(["getProfile"])
+    ...mapActions(["getProfile"]),
+    ...mapActions(["updateProfile"]),
+    setAvaliability() {
+      let user = {
+        _id: this.user._id,
+        avaliable: this.avaliable,
+      };
+      this.updateProfile(user)
+
+      if(this.avaliable == "nonavaliable") {
+        document.getElementById("userName").style.color = "red";
+      } else if(this.avaliable == "avaliable") {
+        document.getElementById("userName").style.color = "green";
+      }
+        
+    }
   },
   created() {
     this.getProfile().then(res => {
@@ -83,6 +107,11 @@ export default {
         this.$refs.notifyDonation.style.backgroundColor = '#ffa399'
       }
 
+      if(this.user.avaliable == "nonavaliable") {
+        document.getElementById("userName").style.color = "red";
+      } else if(this.user.avaliable == "avaliable") {
+        document.getElementById("userName").style.color = "green";
+      }
     });
   }
 };
@@ -169,5 +198,12 @@ export default {
 }
 .infoUser {
   color: #6e6e6e;
+}
+.avaliability {
+  font-size: 18px;
+  color: #6e6e6e;
+}
+.avaliability label {
+  margin-left: 10px;
 }
 </style>

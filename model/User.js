@@ -19,6 +19,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    role: {
+     type: String,
+     default: 'basic',
+     required: false,
+     enum: ["basic", "admin"]
+    },
     birthdate: {
         type: Date,
         required: true
@@ -43,11 +49,10 @@ const UserSchema = new Schema({
         type: Date,
         required: true
     }],
-    role: {
-     type: String,
-     default: 'basic',
-     required: false,
-     enum: ["basic", "admin"]
+    avaliable: {
+        type: String,
+        required: false,
+        default: 'avaliable',
     },
 });
 

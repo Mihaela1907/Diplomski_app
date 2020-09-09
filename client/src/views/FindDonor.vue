@@ -291,6 +291,10 @@ export default {
           for(var j=0;j<this.tempCan.length;j++){
             this.potentialDonors[j] = this.allDonors[this.tempCan[j]]            
           }
+
+          this.potentialDonors = this.potentialDonors.filter(function(result) { 
+            return result.avaliable === "avaliable";  
+          });
       }
       this.showAllDonors()
     });

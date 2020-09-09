@@ -7,6 +7,9 @@
       <a href="#tkoJe">Tko je donor krvi?</a>
       <a href="#tkoNemoze">Tko ne smije donirati krv?</a>
       <a href="#kolikoCesto">Koliko često se može donirati krv?</a>
+      <br>
+      <br>
+      <a href=""><router-link to="/checkAbility">PROVJERITE MOŽETE LI TRENUTNO DONIRATI?</router-link></a>
 
     </div>
     <div class="aboutBox">

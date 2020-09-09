@@ -10,12 +10,6 @@
         @mouseover="showHospital(index)"
         @mouseout="hideHospital()"
         />
-        <!-- <GmapCircle
-            :center="{lat: 45.5522199, lng: 18.6987464}"
-            :radius="1000"
-            :visible="true"
-            :options="{fillColor:'red',fillOpacity:0.3,strokeColor:'transparent'}"
-        ></GmapCircle> -->
     </GmapMap>
   </div>
 </template>
