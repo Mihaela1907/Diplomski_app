@@ -96,7 +96,7 @@ export default {
     },
     addDonations() {
       if(this.donationDate !== ""){
-        this.dates.unshift(this.donationDate);
+        this.dates.unshift(new Date(this.donationDate));
 
         let user = {
           _id: this.user._id,
@@ -108,7 +108,7 @@ export default {
             return 0;
           };
           this.dates.sort(date_sort_desc);
-
+        console.log(this.dates)
         this.addDonation(user)
       }else {
         alert("Izaberite datum!");
