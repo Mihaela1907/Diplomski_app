@@ -77,7 +77,11 @@ export default {
     ...mapActions(["getUsers"]),
     ...mapActions(["deleteUser"]),
     searchByFilter() {
-      var category = this.searchCategory
+      if(this.searchCategory == "" || this.searchTerm == "")
+      { 
+        alert("Unesite kriterije pretrage!")
+      } else 
+      {var category = this.searchCategory
       var test = this.searchTerm
       if(category == "name") {
         this.list = this.donors.filter(function(result) {
@@ -106,7 +110,7 @@ export default {
         document.getElementById("notificationP").innerText = "Ne postoje donori koji zadovoljavaju navedene kriterije."
       } else {
         document.getElementById("notificationP").innerText = ""
-      }
+      }}
     },
     removeDonor(index) {
       if(confirm("Jeste li sigurni da želite ukloniti izabranog korisnika?")){

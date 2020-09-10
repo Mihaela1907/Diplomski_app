@@ -142,7 +142,7 @@ export default {
         this.supplySearch();
       } else if(grupa == "0+") {
         this.filterDonors("0-","0+","","","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","0+","","","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -154,7 +154,7 @@ export default {
         }
       } else if(grupa == "A+") {
         this.filterDonors("0-","0+","A-","A+","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","0+","A-","A+","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -166,7 +166,7 @@ export default {
         }
       } else if(grupa == "A-") {
         this.filterDonors("0-","A-","","","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","A-","","","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -178,7 +178,7 @@ export default {
         }
       } else if(grupa == "B-") {
         this.filterDonors("0-","B-","","","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","B-","","","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -190,7 +190,7 @@ export default {
         }
       } else if(grupa == "B+") {
         this.filterDonors("0-","0+","B-","B+","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","0+","B-","B+","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -202,7 +202,7 @@ export default {
         }
       } else if(grupa == "AB-") {
         this.filterDonors("0-","A-","B-","AB-","","","","", 10000)
-        if(this.list.length == 0) {
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","A-","B-","AB-","","","","", 100000)
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
@@ -214,8 +214,10 @@ export default {
         }
       } else if(grupa == "AB+") {
         this.filterDonors("0-","0+","A-","A+","B-","B+","AB-","AB+", 10000)
-        if(this.list.length == 0) {
+        console.log("ovdje1")
+        if(this.list.length < this.bloodAmount) {
           this.filterDonors("0-","A-","B-","AB-","0+","A+","B+","AB+", 100000)
+          console.log("ovdje2")
           if(this.list.length == 0){
             document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."
           } else {
@@ -247,7 +249,7 @@ export default {
         this.list = this.potentialDonors.filter(function(result) { 
           var b = new google.maps.LatLng(result.residence[5], result.residence[6]);
           var dist = google.maps.geometry.spherical.computeDistanceBetween(a,b);
-          return result.bloodgroup === grupa  &&  dist < 100000;  
+          return result.bloodgroup === grupa  &&  dist < 200000;  
         });
         if(this.list.length == 0){
           document.getElementById("notifi").innerText = "Trenutno nema donora koji zadovoljavaju navedene kriterije."

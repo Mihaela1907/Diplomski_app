@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <Navbar/>
     <div class="">
-      <!-- <Errors v-if="error" :msg="error"/> -->
+      <Errors v-if="error" :msg="error" class="error"/>
       <router-view/>
     </div>
     <Footer></Footer>
@@ -12,12 +12,12 @@
 <script>
 import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar";
-//import Errors from "@/components/Errors";
+import Errors from "@/components/Errors";
 import Footer from "@/components/Footer"
 export default {
   components: {
     Navbar,
-    //Errors,
+    Errors,
     Footer
   },
   computed: {
@@ -34,5 +34,10 @@ export default {
 }
 .app {
   background-color: lightblue;
+}
+.error {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
 }
 </style>
