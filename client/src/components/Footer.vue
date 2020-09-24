@@ -21,6 +21,7 @@
             </div>
             <div class="footerBox footerBox3">
                 <label>Diplomski rad</label>
+                <p class="footerLink">Fakultet elektrotehnike, računarstva i informacijskih tehnologija, Osijek</p>
                 <p class="footerLink">Izradila: <br>Mihaela Dijanešić</p>
                 <p class="footerLink">Mentor: <br>Prof.dr.sc. Goran Martinović</p>
             </div>
